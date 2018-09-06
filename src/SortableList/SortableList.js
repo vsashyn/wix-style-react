@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'lodash/cloneDeep';
 
 import WixComponent from '../BaseComponents/WixComponent';
 import {Draggable} from '../DragAndDrop/Draggable';
 import Container from '../DragAndDrop/Draggable/components/Container';
 import DragDropContextProvider from '../DragDropContextProvider';
-
-const copy = value => JSON.parse(JSON.stringify(value));
-
 
 /**
  * Attaches Drag and Drop behavior to a list of items
