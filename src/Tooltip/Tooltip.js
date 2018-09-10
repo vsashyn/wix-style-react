@@ -311,6 +311,13 @@ class Tooltip extends WixComponent {
           this._showTimeout = null;
 
           this.renderTooltipIntoContainer();
+
+          // To prevent any possible jumping of tooltip, we need to try to update tooltip position in sync way
+          const tooltipNode = ReactDOM.findDOMNode(this.tooltipContent);
+          if (tooltipNode) {
+            this._updatePosition(this.tooltipContent);
+          }
+
           let fw = 0;
           let sw = 0;
           // we need to set tooltip position after render of tooltip into container, on next event loop
