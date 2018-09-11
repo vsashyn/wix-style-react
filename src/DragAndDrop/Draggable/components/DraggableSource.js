@@ -45,15 +45,17 @@ const source = {
   }
 };
 
-@DragSource(ItemTypes.DRAGGABLE, source, (connect, monitor) => ({
+const collect = (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   connectDragPreview: connect.dragPreview(),
   isDragging: monitor.isDragging()
-}))
+});
+
+@DragSource(ItemTypes.DRAGGABLE, source, collect)
 export default class DraggableSource extends React.Component {
   componentDidMount() {
     if (this.props.connectDragPreview) {
-      this.props.connectDragPreview(getEmptyImage());
+      this.props.connectDragPreview(getEmptyImage(), {captureDraggingState: true});
     }
   }
 
@@ -68,27 +70,30 @@ export default class DraggableSource extends React.Component {
       });
     }
 
-    return connectDragSource(
-      renderItem({
-        id,
-        item,
-        isPlaceholder: isDragging,
-        connectHandle: noop
-      })
-    );
+    return renderItem({
+      id,
+      item,
+      isPlaceholder: isDragging,
+      connectHandle: noop
+    });
+  }
+
+  _renderPreview = ({previewStyles}) => {
+    const {renderItem, id, item} = this.props;
+    return renderItem({
+      id,
+      item,
+      previewStyles,
+      isPreview: true,
+      connectHandle: noop
+    });
   }
 
   _renderPreviewItem() {
-    const {renderItem, id, item} = this.props;
+    const {id} = this.props;
     return (
       <DragLayer
-        renderPreview={({previewStyles}) => renderItem({
-          id,
-          item,
-          previewStyles,
-          isPreview: true,
-          connectHandle: noop
-        })}
+        renderPreview={this._renderPreview}
         id={id}
         draggedType={ItemTypes.DRAGGABLE}
         />
@@ -97,7 +102,7 @@ export default class DraggableSource extends React.Component {
 
   render() {
     const {connectDragSource} = this.props;
-    return connectDragSource ? (
+    return connectDragSource ? connectDragSource(
       <div>
         {this._renderDraggableItem()}
         {this._renderPreviewItem()}

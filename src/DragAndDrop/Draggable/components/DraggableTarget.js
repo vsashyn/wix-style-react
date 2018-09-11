@@ -64,16 +64,17 @@ const target = {
   }
 };
 
-@DropTarget(ItemTypes.DRAGGABLE, target, connect => ({
+const collect = connect => ({
   connectDropTarget: connect.dropTarget()
-}))
+});
+
+@DropTarget(ItemTypes.DRAGGABLE, target, collect)
 class DraggableTarget extends WixComponent {
   render() {
-    const {connectDropTarget, children} = this.props;
     if (!this.props.connectDropTarget) {
       return null;
     }
-    return connectDropTarget(<div>{children}</div>);
+    return this.props.connectDropTarget(<div>{this.props.children}</div>);
   }
 }
 

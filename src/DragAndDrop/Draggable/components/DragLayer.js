@@ -53,8 +53,8 @@ CustomDragLayer.propTypes = {
   isDragging: PropTypes.bool,
   renderPreview: PropTypes.func,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  initialOffset: PropTypes.number,
-  currentOffset: PropTypes.number
+  initialOffset: PropTypes.object,
+  currentOffset: PropTypes.object
 };
 
 export default DragLayer(monitor => ({

@@ -17,11 +17,11 @@ class DragDropContextProvider extends React.Component {
     children: PropTypes.node
   }
   static contextTypes = {
-    dragDropManager: PropTypes.object.isRequired
+    dragDropManager: PropTypes.object
   };
 
   static childContextTypes = {
-    dragDropManager: PropTypes.object.isRequired
+    dragDropManager: PropTypes.object
   };
 
   getChildContext() {
