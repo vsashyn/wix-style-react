@@ -1,10 +1,16 @@
 import React from 'react';
-import WixComponent from '../../BaseComponents/WixComponent';
 import PropTypes from 'prop-types';
+import shallowCompare from 'react-addons-shallow-compare';
+
+import WixComponent from '../../BaseComponents/WixComponent';
 import DraggableSource from './components/DraggableSource';
 import DraggableTarget from './components/DraggableTarget';
 
 export class Draggable extends WixComponent {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
   render() {
     return (
       <DraggableTarget {...this.props}>

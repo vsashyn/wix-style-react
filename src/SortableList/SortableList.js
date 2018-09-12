@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import copy from 'lodash/cloneDeep';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import WixComponent from '../BaseComponents/WixComponent';
 import {Draggable} from '../DragAndDrop/Draggable';
@@ -15,14 +16,23 @@ export default class SortableList extends WixComponent {
     items: this.props.items || []
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+
+  componentDidMount() {
+    this.updateCachedItems();
+    this.setState({});
+  }
+
   componentWillReceiveProps({items}) {
     if (items) {
-      this.setState({items});
+      this.setState({items}, () => this.updateCachedItems());
     }
   }
 
   handleMoveOut = id => {
-    this.setState({items: this.state.items.filter(it => it.id !== id)});
+    this.setState({items: this.state.items.filter(it => it.id !== id)}, () => this.updateCachedItems());
   }
 
   handleHover = (removedIndex, addedIndex, options = {}) => {
@@ -35,7 +45,7 @@ export default class SortableList extends WixComponent {
       }
 
       return {items: nextItems};
-    });
+    }, () => this.updateCachedItems());
   };
 
   handleDrop = ({payload, addedIndex, removedIndex, addedToContainerId, removedFromContainerId}) => {
@@ -47,6 +57,27 @@ export default class SortableList extends WixComponent {
       removedFromContainerId
     });
   };
+
+  updateCachedItems = () => {
+    const common = {
+      groupName: this.props.groupName,
+      containerId: this.props.containerId,
+      onHover: this.handleHover,
+      onMoveOut: this.handleMoveOut
+    };
+    this.itemsElements = this.state.items.map((item, index) => (
+      <Draggable
+        {...common}
+        key={`${item.id}-${index}-${this.props.containerId}`}
+        id={item.id}
+        index={index}
+        item={item}
+        renderItem={this.props.renderItem}
+        withHandle={this.props.withHandle}
+        onDrop={this.handleDrop}
+        />
+    ));
+  }
 
   renderPreview() {
     const {className, contentClassName, renderItem} = this.props;
@@ -95,18 +126,7 @@ export default class SortableList extends WixComponent {
           {...common}
           >
           <div className={contentClassName}>
-            {this.state.items.map((item, index) => (
-              <Draggable
-                {...common}
-                key={`${item.id}-${index}-${this.props.containerId}`}
-                id={item.id}
-                index={index}
-                item={item}
-                renderItem={this.props.renderItem}
-                withHandle={this.props.withHandle}
-                onDrop={this.handleDrop}
-                />
-            ))}
+            {this.itemsElements}
           </div>
         </Container>
       </DragDropContextProvider>

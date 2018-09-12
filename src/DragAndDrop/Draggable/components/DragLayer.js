@@ -12,39 +12,40 @@ const layerStyles = {
   top: 0
 };
 
-const dragLayerStyle = ({initialOffset, currentOffset}) => {
-  if (!initialOffset || !currentOffset) {
-    return {
-      display: 'none'
-    };
+let dragPreviewRef = null;
+
+const onOffsetChange = monitor => {
+  if (!dragPreviewRef) {
+    return;
   }
 
-  const transform = `translate(${currentOffset.x}px, ${currentOffset.y}px)`;
-  return {
-    ...layerStyles,
-    transform,
-    WebkitTransform: transform
-  };
-};
-
-const CustomDragLayer = ({
-  item,
-  itemType,
-  draggedType,
-  isDragging,
-  renderPreview,
-  id,
-  initialOffset,
-  currentOffset
-}) => {
-  const shouldRenderLayer = isDragging && id === item.id && itemType === draggedType;
-  if (!shouldRenderLayer) {
-    return null;
+  const offset = monitor.getSourceClientOffset() || monitor.getInitialClientOffset();
+  if (!offset) {
+    return;
   }
-  const previewStyles = dragLayerStyle({initialOffset, currentOffset});
 
-  return <div>{renderPreview({previewStyles})}</div>;
+  const transform = `translate(${offset.x}px, ${offset.y}px)`;
+  dragPreviewRef.style.transform = transform;
+  dragPreviewRef.style['-webkit-transform'] = transform;
 };
+
+class CustomDragLayer extends React.Component {
+  render() {
+    const {
+      item,
+      itemType,
+      draggedType,
+      isDragging,
+      renderPreview,
+      id
+    } = this.props;
+    const shouldRenderLayer = isDragging && id === item.id && itemType === draggedType;
+    if (!shouldRenderLayer) {
+      return null;
+    }
+    return <div style={layerStyles} ref={node => dragPreviewRef = node}>{renderPreview({})}</div>;
+  }
+}
 
 CustomDragLayer.propTypes = {
   item: PropTypes.object,
@@ -52,15 +53,14 @@ CustomDragLayer.propTypes = {
   draggedType: PropTypes.string,
   isDragging: PropTypes.bool,
   renderPreview: PropTypes.func,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  initialOffset: PropTypes.object,
-  currentOffset: PropTypes.object
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
-export default DragLayer(monitor => ({
-  item: monitor.getItem(),
-  itemType: monitor.getItemType(),
-  initialOffset: monitor.getInitialSourceClientOffset(),
-  currentOffset: monitor.getSourceClientOffset(),
-  isDragging: monitor.isDragging()
-}))(CustomDragLayer);
+export default DragLayer(monitor => {
+  onOffsetChange(monitor);
+  return {
+    item: monitor.getItem(),
+    itemType: monitor.getItemType(),
+    isDragging: monitor.isDragging()
+  };
+})(CustomDragLayer);
