@@ -79,6 +79,7 @@ export default class DraggableMultiAreaList extends React.Component {
     return (
       <div className={classes} style={previewStyles} data-hook={`column-${id}`}>
         <SortableList
+          preview={isPreview}
           className={classNames(defaultDndStyles.list, styles.column)}
           dataHook={`column-${id}`}
           groupName="multi-area"

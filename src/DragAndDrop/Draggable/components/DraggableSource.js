@@ -70,12 +70,14 @@ export default class DraggableSource extends React.Component {
       });
     }
 
-    return renderItem({
-      id,
-      item,
-      isPlaceholder: isDragging,
-      connectHandle: noop
-    });
+    return connectDragSource(
+      renderItem({
+        id,
+        item,
+        isPlaceholder: isDragging,
+        connectHandle: noop
+      })
+    );
   }
 
   _renderPreview = ({previewStyles}) => {
@@ -102,12 +104,11 @@ export default class DraggableSource extends React.Component {
 
   render() {
     const {connectDragSource} = this.props;
-    return connectDragSource ? connectDragSource(
+    return connectDragSource ?
       <div>
         {this._renderDraggableItem()}
         {this._renderPreviewItem()}
-      </div>
-    ) : null;
+      </div> : null;
   }
 }
 

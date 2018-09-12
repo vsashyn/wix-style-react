@@ -48,14 +48,45 @@ export default class SortableList extends WixComponent {
     });
   };
 
+  renderPreview() {
+    const {className, contentClassName, renderItem} = this.props;
+    return (
+      <div className={className}>
+        <div className={contentClassName}>
+          {
+            this.state.items.map(
+              (item, index) => (
+                <div key={`${item.id}-${index}-${this.props.containerId}`}>
+                  {
+                    renderItem({
+                      item,
+                      id: item.id,
+                      isPlaceholder: false,
+                      isPreview: false
+                    })
+                  }
+                </div>
+              )
+            )
+          }
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    const {className, contentClassName, groupName} = this.props;
+    const {className, contentClassName, groupName, preview} = this.props;
     const common = {
       groupName,
       containerId: this.props.containerId,
       onHover: this.handleHover,
       onMoveOut: this.handleMoveOut
     };
+
+    if (preview) {
+      return this.renderPreview();
+    }
+
     return (
       <DragDropContextProvider>
         <Container
@@ -88,6 +119,7 @@ SortableList.displayName = 'SortableList';
 SortableList.propTypes = {
   ...Draggable.propTypes,
   /** list of items with {id: any} */
+  preview: PropTypes.bool,
   items: PropTypes.array,
   className: PropTypes.string,
   contentClassName: PropTypes.string
