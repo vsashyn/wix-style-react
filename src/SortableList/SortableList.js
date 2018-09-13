@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import copy from 'lodash/cloneDeep';
 
 import WixComponent from '../BaseComponents/WixComponent';
 import {Draggable} from '../DragAndDrop/Draggable';
@@ -27,7 +26,7 @@ export default class SortableList extends WixComponent {
 
   handleHover = (removedIndex, addedIndex, options = {}) => {
     this.setState(prevState => {
-      const nextItems = copy(prevState.items);
+      const nextItems = [...prevState.items];
       if (!nextItems.find(it => it.id === options.id)) {
         nextItems.splice(addedIndex, 0, options.item);
       } else {
