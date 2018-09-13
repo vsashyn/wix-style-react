@@ -80,7 +80,7 @@ export default class SortableList extends WixComponent {
   }
 
   render() {
-    const {className, contentClassName, groupName, preview} = this.props;
+    const {className, contentClassName, groupName, dragPreview} = this.props;
     const common = {
       groupName,
       containerId: this.props.containerId,
@@ -88,7 +88,7 @@ export default class SortableList extends WixComponent {
       onMoveOut: this.handleMoveOut
     };
 
-    if (preview) {
+    if (dragPreview) {
       return this.renderPreview();
     }
 
@@ -126,7 +126,7 @@ SortableList.displayName = 'SortableList';
 SortableList.propTypes = {
   ...Draggable.propTypes,
   /** list of items with {id: any} */
-  preview: PropTypes.bool,
+  dragPreview: PropTypes.bool,
   items: PropTypes.array,
   className: PropTypes.string,
   contentClassName: PropTypes.string
