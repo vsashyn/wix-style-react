@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import copy from 'lodash/cloneDeep';
-import shallowCompare from 'react-addons-shallow-compare';
 
 import WixComponent from '../BaseComponents/WixComponent';
 import {Draggable} from '../DragAndDrop/Draggable';
@@ -14,10 +13,6 @@ import DragDropContextProvider from '../DragDropContextProvider';
 export default class SortableList extends WixComponent {
   state = {
     items: this.props.items || []
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillReceiveProps({items}) {
@@ -125,9 +120,16 @@ SortableList.displayName = 'SortableList';
 
 SortableList.propTypes = {
   ...Draggable.propTypes,
-  /** list of items with {id: any} */
+  /**
+    if you are having nested SortableLists,
+    list that you are currently dragging need to be marked as dragPreview
+    inside of renderItem callback
+  */
   dragPreview: PropTypes.bool,
+  /** list of items with {id: any} */
   items: PropTypes.array,
+  /** className of the root container */
   className: PropTypes.string,
+  /** className of the first items parent container */
   contentClassName: PropTypes.string
 };
