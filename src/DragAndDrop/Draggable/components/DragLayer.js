@@ -1,6 +1,9 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import {DragLayer} from 'react-dnd';
+
+const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer;
 
 /* eslint-disable new-cap */
 
@@ -13,6 +16,7 @@ const layerStyles = {
 };
 
 let dragPreviewRef = null;
+let mountNode = null;
 
 const onOffsetChange = monitor => {
   if (!dragPreviewRef) {
@@ -30,23 +34,53 @@ const onOffsetChange = monitor => {
 };
 
 class CustomDragLayer extends React.Component {
-  render() {
-    const {
-      item,
-      itemType,
-      draggedType,
-      isDragging,
-      renderPreview,
-      id,
-      offsetOfHandle
-    } = this.props;
-    const shouldRenderLayer = isDragging && id === item.id && itemType === draggedType;
-    if (!shouldRenderLayer) {
-      return null;
+  shouldRenderLayer = (props = this.props) => {
+    const {id, item, itemType, draggedType, isDragging} = props;
+    return isDragging && id === item.id && itemType === draggedType;
+  };
+
+  componentDidUpdate(prevProps) {
+    const prev = this.shouldRenderLayer(prevProps);
+    const next = this.shouldRenderLayer(this.props);
+    if (prev && !next) {
+      this.removeFromPortal();
+    } else if (!prev && next) {
+      this.renderInPortal(
+        <div
+          style={layerStyles}
+          ref={node => dragPreviewRef = node}
+          >
+          {this.props.renderPreview({})}
+        </div>
+      );
     }
-    /* if user drag by handle, then we need to move preview item, to show correct position of item during drag */
-    const styles = Object.assign({}, layerStyles, {left: -offsetOfHandle.x, top: -offsetOfHandle.y});
-    return <div style={styles} ref={node => dragPreviewRef = node}>{renderPreview({})}</div>;
+  }
+
+  renderInPortal = element => {
+    if (!mountNode) {
+      mountNode = document.createElement('div');
+      mountNode.id = 'magic-id';
+      document.body.appendChild(mountNode);
+    }
+    if (!dragPreviewRef) {
+      renderSubtreeIntoContainer(this, element, mountNode);
+    }
+  }
+
+  removeFromPortal = () => {
+    if (mountNode) {
+      ReactDOM.unmountComponentAtNode(mountNode);
+      document.body.removeChild(mountNode);
+      mountNode = null;
+    }
+  }
+
+
+  render() {
+    if (this.shouldRenderLayer()) {
+      return <div/>;
+    }
+    return null;
   }
 }
 
