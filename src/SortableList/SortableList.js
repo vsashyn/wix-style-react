@@ -118,6 +118,7 @@ export default class SortableList extends WixComponent {
                 item={item}
                 renderItem={this.props.renderItem}
                 withHandle={this.props.withHandle}
+                withDragLayerPortal={this.props.withDragLayerPortal}
                 onDrop={this.handleDrop}
                 onDragStart={this.handleDragStart}
                 onDragEnd={this.handleDragEnd}
@@ -140,6 +141,7 @@ SortableList.propTypes = {
     list that you are currently dragging need to be marked as dragPreview
     inside of renderItem callback
   */
+  withDragLayerPortal: PropTypes.bool,
   dragPreview: PropTypes.bool,
   /** list of items with {id: any} */
   items: PropTypes.array,

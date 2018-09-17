@@ -34,27 +34,22 @@ const onOffsetChange = monitor => {
 };
 
 class CustomDragLayer extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.withDragLayerPortal) {
+      const prev = this.shouldRenderLayer(prevProps);
+      const next = this.shouldRenderLayer(this.props);
+      if (prev && !next) {
+        this.removeFromPortal();
+      } else if (!prev && next) {
+        this.renderInPortal(this.renderPreview());
+      }
+    }
+  }
+
   shouldRenderLayer = (props = this.props) => {
     const {id, item, itemType, draggedType, isDragging} = props;
     return isDragging && id === item.id && itemType === draggedType;
   };
-
-  componentDidUpdate(prevProps) {
-    const prev = this.shouldRenderLayer(prevProps);
-    const next = this.shouldRenderLayer(this.props);
-    if (prev && !next) {
-      this.removeFromPortal();
-    } else if (!prev && next) {
-      this.renderInPortal(
-        <div
-          style={layerStyles}
-          ref={node => dragPreviewRef = node}
-          >
-          {this.props.renderPreview({})}
-        </div>
-      );
-    }
-  }
 
   renderInPortal = element => {
     if (!mountNode) {
@@ -75,12 +70,23 @@ class CustomDragLayer extends React.Component {
     }
   }
 
+  renderPreview = () => {
+    return (
+      <div
+        style={layerStyles}
+        ref={node => dragPreviewRef = node}
+        >
+        {this.props.renderPreview({})}
+      </div>
+    );
+  }
+
 
   render() {
-    if (this.shouldRenderLayer()) {
-      return <div/>;
+    if (!this.shouldRenderLayer()) {
+      return null;
     }
-    return null;
+    return this.props.withDragLayerPortal ? null : this.renderPreview();
   }
 }
 
@@ -91,6 +97,7 @@ CustomDragLayer.propTypes = {
   draggedType: PropTypes.string,
   isDragging: PropTypes.bool,
   renderPreview: PropTypes.func,
+  withDragLayerPortal: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
