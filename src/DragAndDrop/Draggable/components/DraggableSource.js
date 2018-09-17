@@ -10,7 +10,10 @@ import {ItemTypes} from './../types';
 /* eslint-disable new-cap */
 
 const source = {
-  beginDrag: ({id, index, containerId, groupName, item, onMoveOut}) => {
+  beginDrag: ({id, index, containerId, groupName, item, onMoveOut, onDragStart}) => {
+    if (onDragStart) {
+      onDragStart();
+    }
     /** we setup monitor.getItem() snapshot, so we will be always able to get info about item that we drag */
     return {
       id,
@@ -25,8 +28,11 @@ const source = {
       }
     };
   },
-  endDrag: ({index, containerId, onDrop}, monitor) => {
+  endDrag: ({index, containerId, onDrop, onDragEnd}, monitor) => {
     /** if drop was called, on drop target and drag is end, then we notify parent about this */
+    if (onDragEnd) {
+      onDragEnd();
+    }
     if (monitor.getDropResult()) {
       onDrop({
         payload: monitor.getItem().originalItem, // original item
@@ -125,6 +131,8 @@ DraggableSource.propTypes = {
   item: PropTypes.object,
   withHandle: PropTypes.bool,
   onDrop: PropTypes.func,
-  onMoveOut: PropTypes.func
+  onMoveOut: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDragEnd: PropTypes.func
 };
 

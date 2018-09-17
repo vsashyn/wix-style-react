@@ -35,7 +35,11 @@ Draggable.propTypes = {
   /** callback when item was dropped in a new location */
   onDrop: PropTypes.func,
   /** callback when item is hovered*/
-  onHover: PropTypes.func
+  onHover: PropTypes.func,
+  /** callback for drag start */
+  onDragStart: PropTypes.func,
+  /** callback for drag end */
+  onDragEnd: PropTypes.func
 };
 
 export default Draggable;
