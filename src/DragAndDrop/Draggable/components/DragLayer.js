@@ -46,6 +46,10 @@ class CustomDragLayer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.removeFromPortal();
+  }
+
   shouldRenderLayer = (props = this.props) => {
     const {id, item, itemType, draggedType, isDragging} = props;
     return isDragging && id === item.id && itemType === draggedType;
