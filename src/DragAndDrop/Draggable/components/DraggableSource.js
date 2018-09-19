@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import {DragSource} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
@@ -59,9 +60,32 @@ const collect = (connect, monitor) => ({
 
 @DragSource(ItemTypes.DRAGGABLE, source, collect)
 export default class DraggableSource extends React.Component {
+  state = {
+    offsetOfHandler: {x: 0, y: 0}
+  }
+
   componentDidMount() {
     if (this.props.connectDragPreview) {
       this.props.connectDragPreview(getEmptyImage(), {captureDraggingState: true});
+    }
+    this.updateDiff();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id || prevProps.containerId !== this.props.containerId) {
+      this.updateDiff();
+    }
+  }
+
+  updateDiff() {
+    /* in case if we have handle, the drag will start in wrong position and we need to fix this */
+    if (this.props.withHandle && this.handleNode) {
+      this.setState({
+        offsetOfHandler: {
+          x: this.handleNode.getBoundingClientRect().x - this.rootNode.getBoundingClientRect().x,
+          y: this.handleNode.getBoundingClientRect().y - this.rootNode.getBoundingClientRect().y
+        }
+      });
     }
   }
 
@@ -72,7 +96,12 @@ export default class DraggableSource extends React.Component {
         id,
         item,
         isPlaceholder: isDragging,
-        connectHandle: handle => connectDragSource(handle)
+        connectHandle: handle => {
+          const handleWithRef = React.cloneElement(handle, {
+            ref: node => this.handleNode = ReactDOM.findDOMNode(node)
+          });
+          return connectDragSource(handleWithRef);
+        }
       });
     }
 
@@ -101,6 +130,7 @@ export default class DraggableSource extends React.Component {
     const {id} = this.props;
     return (
       <DragLayer
+        offsetOfHandler={this.state.offsetOfHandler}
         renderPreview={this._renderPreview}
         id={id}
         draggedType={ItemTypes.DRAGGABLE}
@@ -111,7 +141,7 @@ export default class DraggableSource extends React.Component {
   render() {
     const {connectDragSource} = this.props;
     return connectDragSource ?
-      <div>
+      <div ref={node => this.rootNode = node}>
         {this._renderDraggableItem()}
         {this._renderPreviewItem()}
       </div> : null;
