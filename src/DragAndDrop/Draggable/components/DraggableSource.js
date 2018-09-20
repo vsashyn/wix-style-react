@@ -61,7 +61,7 @@ const collect = (connect, monitor) => ({
 @DragSource(ItemTypes.DRAGGABLE, source, collect)
 export default class DraggableSource extends React.Component {
   state = {
-    offsetOfHandler: {x: 0, y: 0}
+    offsetOfHandle: {x: 0, y: 0}
   }
 
   componentDidMount() {
@@ -81,7 +81,7 @@ export default class DraggableSource extends React.Component {
     /* in case if we have handle, the drag will start in wrong position and we need to fix this */
     if (this.props.withHandle && this.handleNode) {
       this.setState({
-        offsetOfHandler: {
+        offsetOfHandle: {
           x: this.handleNode.getBoundingClientRect().x - this.rootNode.getBoundingClientRect().x,
           y: this.handleNode.getBoundingClientRect().y - this.rootNode.getBoundingClientRect().y
         }
@@ -130,7 +130,7 @@ export default class DraggableSource extends React.Component {
     const {id} = this.props;
     return (
       <DragLayer
-        offsetOfHandler={this.state.offsetOfHandler}
+        offsetOfHandle={this.state.offsetOfHandle}
         renderPreview={this._renderPreview}
         id={id}
         draggedType={ItemTypes.DRAGGABLE}
