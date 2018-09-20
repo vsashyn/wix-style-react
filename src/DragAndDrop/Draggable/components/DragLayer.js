@@ -47,7 +47,7 @@ class CustomDragLayer extends React.Component {
     );
   }
 
-  renderPortal = () => {
+  renderPreviewInPortal = () => {
     return (
       <Portal>
         {this.renderPreview()}
@@ -59,7 +59,7 @@ class CustomDragLayer extends React.Component {
     if (!this.shouldRenderLayer()) {
       return null;
     }
-    return this.props.withDragLayerPortal ? this.renderPortal() : this.renderPreview();
+    return this.props.usePortal ? this.renderPreviewInPortal() : this.renderPreview();
   }
 }
 
@@ -70,7 +70,7 @@ CustomDragLayer.propTypes = {
   draggedType: PropTypes.string,
   isDragging: PropTypes.bool,
   renderPreview: PropTypes.func,
-  withDragLayerPortal: PropTypes.bool,
+  usePortal: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
