@@ -58,7 +58,6 @@ class CustomDragLayer extends React.Component {
   renderInPortal = element => {
     if (!mountNode) {
       mountNode = document.createElement('div');
-      mountNode.id = 'magic-id';
       document.body.appendChild(mountNode);
     }
     if (!dragPreviewRef) {
