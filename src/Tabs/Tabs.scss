@@ -1,5 +1,5 @@
 @import '../common.scss';
-@import '../typography';
+@import '../typography-helpers';
 
 .container {
   @include Text($weight: thin, $size: medium);

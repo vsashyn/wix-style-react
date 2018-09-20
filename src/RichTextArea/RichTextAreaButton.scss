@@ -1,5 +1,5 @@
 @import '../common';
-@import '../typography';
+@import '../typography-helpers';
 @import '../common/Focusable/Focusable';
 
 .button {
@@ -9,13 +9,13 @@
   color: $D30;
   border-radius: 6px;
   outline: none;
- 
+
   &:not(.disabled) {
     &:hover,
     &.isActive {
       color: $B10;
     }
-    
+
     &#{$focusable-focus-visible} {
       @include FocusBox;
       z-index: 1;

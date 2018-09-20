@@ -3,7 +3,7 @@
 
 @import '../common';
 @import '../common/Focusable/Focusable';
-@import '../typography';
+@import '../typography-helpers';
 
 $base-transition: all 100ms linear;
 
@@ -53,7 +53,7 @@ $base-transition: all 100ms linear;
 
   /* HEIGHT */
   @include TextSizeAndFontFamily($size: medium, $weight: normal);
-  
+
 }
 
 .heightx-large {
@@ -291,7 +291,7 @@ $base-transition: all 100ms linear;
 .whitebluesecondary,
 .icon-whitesecondary {
   @include TextColor($light: true);
-  
+
   background-color: transparent;
   border-color: $D80;
 }
@@ -558,11 +558,11 @@ $base-transition: all 100ms linear;
   border: none;
 
   color: $D10;
-  
+
   &:hover, &.hover {
     color: $B10;
   }
-  
+
   &.heightsmall,
   &.heightx-small  {
     @include TextColor($secondary: true);
