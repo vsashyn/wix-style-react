@@ -135,6 +135,7 @@
     "react-jss": "^8.0.0",
     "react-modal": "^3.3.2",
     "react-motion": "^0.4.7",
+    "react-portal": "^4.1.5",
     "react-remarkable": "^1.1.1",
     "react-transition-group": "^2.2.1",
     "slate": "^0.20.3",

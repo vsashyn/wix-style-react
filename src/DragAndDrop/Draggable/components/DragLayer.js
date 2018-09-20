@@ -1,9 +1,7 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import {Portal} from 'react-portal';
 import PropTypes from 'prop-types';
 import {DragLayer} from 'react-dnd';
-
-const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer;
 
 /* eslint-disable new-cap */
 
@@ -16,7 +14,6 @@ const layerStyles = {
 };
 
 let dragPreviewRef = null;
-let mountNode = null;
 
 const onOffsetChange = monitor => {
   if (!dragPreviewRef) {
@@ -34,44 +31,10 @@ const onOffsetChange = monitor => {
 };
 
 class CustomDragLayer extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.withDragLayerPortal) {
-      const prev = this.shouldRenderLayer(prevProps);
-      const next = this.shouldRenderLayer(this.props);
-      if (prev && !next) {
-        this.removeFromPortal();
-      } else if (!prev && next) {
-        this.renderInPortal(this.renderPreview());
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    this.removeFromPortal();
-  }
-
   shouldRenderLayer = (props = this.props) => {
     const {id, item, itemType, draggedType, isDragging} = props;
     return isDragging && id === item.id && itemType === draggedType;
   };
-
-  renderInPortal = element => {
-    if (!mountNode) {
-      mountNode = document.createElement('div');
-      document.body.appendChild(mountNode);
-    }
-    if (!dragPreviewRef) {
-      renderSubtreeIntoContainer(this, element, mountNode);
-    }
-  }
-
-  removeFromPortal = () => {
-    if (mountNode) {
-      ReactDOM.unmountComponentAtNode(mountNode);
-      document.body.removeChild(mountNode);
-      mountNode = null;
-    }
-  }
 
   renderPreview = () => {
     return (
@@ -84,12 +47,19 @@ class CustomDragLayer extends React.Component {
     );
   }
 
+  renderPortal = () => {
+    return (
+      <Portal>
+        {this.renderPreview()}
+      </Portal>
+    );
+  }
 
   render() {
     if (!this.shouldRenderLayer()) {
       return null;
     }
-    return this.props.withDragLayerPortal ? null : this.renderPreview();
+    return this.props.withDragLayerPortal ? this.renderPortal() : this.renderPreview();
   }
 }
 
