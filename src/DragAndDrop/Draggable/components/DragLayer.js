@@ -37,9 +37,11 @@ class CustomDragLayer extends React.Component {
   };
 
   renderPreview = () => {
+    const {offsetOfHandle} = this.props;
+    const styles = Object.assign({}, layerStyles, {left: -offsetOfHandle.x, top: -offsetOfHandle.y});
     return (
       <div
-        style={layerStyles}
+        style={styles}
         ref={node => dragPreviewRef = node}
         >
         {this.props.renderPreview({})}
