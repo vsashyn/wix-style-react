@@ -46,6 +46,9 @@ class FormField extends React.Component {
     /** whether to display an asterisk (*) or not */
     required: PropTypes.bool,
 
+    /** whether to render the field content horizontally */
+    horizontal: PropTypes.bool,
+
     /** display info icon with tooltip. Node from this prop is content of tooltip */
     infoContent: PropTypes.node,
 
@@ -93,13 +96,13 @@ class FormField extends React.Component {
   };
 
   render() {
-    const {label, required, infoContent, dataHook, id} = this.props;
+    const {label, required, horizontal, infoContent, dataHook, id} = this.props;
     const {lengthLeft} = this.state;
 
     return (
       <div
         data-hook={dataHook}
-        className={styles.root}
+        className={classnames(styles.root, {[styles.horizontal]: horizontal})}
         >
         { label &&
         <div

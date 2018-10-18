@@ -16,6 +16,20 @@
   flex: 1 0 100%;
 }
 
+.root.horizontal {
+  flex-wrap: nowrap;
+  align-content: center;
+
+  .label {
+    margin-right: 40px;
+    margin-bottom: 0;
+  }
+
+  .children {
+    flex: 1 0 auto;
+  }
+}
+
 .childrenWithoutLabel {
   flex: 1 0 auto;
 }

@@ -68,6 +68,7 @@ export default {
     children: childrenExamples[0].value,
     label: 'This is an input:',
     required: true,
+    horizontal: false,
     infoContent: 'I help you to fill info',
     id: 'formFieldId'
   },
