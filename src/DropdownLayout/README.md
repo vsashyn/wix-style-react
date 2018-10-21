@@ -37,3 +37,4 @@
 | title | bool | false | - | Whether this option is a title or not |
 | linkTo | string | - | - | When provided the option will be an anchor to the given value |
 | overrideStyle | bool | false | - | When this is on, no external style will be added to this option, only the internal node style, for further information see the examples |
+| disableSpacing | bool | false | - | When set to `true`, the padding of the option will be disabled. This is useful when `value` is a node, that sets the option padding by itself. |

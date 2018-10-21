@@ -16,6 +16,10 @@
   -st-states: skin(string);
   white-space: nowrap;
   line-height: 24px;
+
+  padding: 6px 24px 6px 20px;
+  display: flex;
+  align-items: center;
 }
 
 .marker {

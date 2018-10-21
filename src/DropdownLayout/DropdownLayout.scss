@@ -87,7 +87,6 @@ $arrowDownShadow: -3px -3px 8px rgba(0, 0, 0, .1);
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
-  padding: 6px 20px 6px 24px;
   @include FontLight();
 
   font-size: 16px;
@@ -95,15 +94,19 @@ $arrowDownShadow: -3px -3px 8px rgba(0, 0, 0, .1);
   cursor: pointer;
 
   width: 100%;
-  display: flex;
-  align-items: center;
 
-  &.small-height {
-    min-height: $option_height;
-  }
+  &.spacing {
+    padding: 6px 20px 6px 24px;
+    display: flex;
+    align-items: center;
 
-  &.big-height {
-    min-height: $big_option_hight;
+    &.small-height {
+      min-height: $option_height;
+    }
+
+    &.big-height {
+      min-height: $big_option_hight;
+    }
   }
 
   &.title {

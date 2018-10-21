@@ -30,5 +30,6 @@ BadgeOption.propTypes = {
 
 export const badgeSelectItemBuilder = ({id, text, skin}) => ({
   id,
-  value: <BadgeOption skin={skin} text={text}/>
+  value: <BadgeOption skin={skin} text={text}/>,
+  disableSpacing: true
 });

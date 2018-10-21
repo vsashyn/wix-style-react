@@ -226,7 +226,7 @@ class DropdownLayout extends WixComponent {
   }
 
   renderOption({option, idx}) {
-    const {value, id, disabled, title, overrideStyle, linkTo} = option;
+    const {value, id, disabled, title, overrideStyle, linkTo, disableSpacing} = option;
     if (value === DIVIDER_OPTION_VALUE) {
       return this.renderDivider(idx, `dropdown-divider-${id || idx}`);
     }
@@ -241,6 +241,7 @@ class DropdownLayout extends WixComponent {
       disabled: disabled || title,
       title,
       overrideStyle,
+      disableSpacing,
       dataHook: `dropdown-item-${id}`,
       tabIndex
     });
@@ -254,11 +255,12 @@ class DropdownLayout extends WixComponent {
     return (<div key={idx} className={styles.divider} data-hook={dataHook}/>);
   }
 
-  renderItem({option, idx, selected, hovered, disabled, title, overrideStyle, dataHook, tabIndex}) {
+  renderItem({option, idx, selected, hovered, disabled, title, overrideStyle, disableSpacing, dataHook, tabIndex}) {
     const {itemHeight, selectedHighlight} = this.props;
 
     const optionClassName = classNames({
       [styles.option]: !overrideStyle,
+      [styles.spacing]: !disableSpacing,
       [styles.selected]: selected && !overrideStyle && selectedHighlight,
       wixstylereactSelected: selected && overrideStyle, //global class for items that use the overrideStyle
       [styles.hovered]: hovered && !overrideStyle,
@@ -345,7 +347,8 @@ DropdownLayout.propTypes = {
         PropTypes.string
       ]).isRequired,
       disabled: PropTypes.bool,
-      overrideStyle: PropTypes.bool
+      overrideStyle: PropTypes.bool,
+      disableSpacing: PropTypes.bool
     }),
 
     // A divider option without an id
