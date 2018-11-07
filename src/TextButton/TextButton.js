@@ -42,12 +42,16 @@ class TextButton extends WixComponent {
       className
     } = this.props;
 
-    const skin = allowedSkins[this.props.skin] ? this.props.skin : undefined;
-    const size = allowedSize[this.props.size] ? this.props.size : undefined;
-    const underlined = allowedUnderlined[this.props.underlined] ?
+    const skin = allowedSkins.includes(this.props.skin) ?
+      this.props.skin :
+      undefined;
+    const size = allowedSize.includes(this.props.size) ?
+      this.props.size :
+      undefined;
+    const underlined = allowedUnderlined.includes(this.props.underlined) ?
       this.props.underlined :
       undefined;
-    const weight = allowedWeight[this.props.weight] ?
+    const weight = allowedWeight.includes(this.props.weight) ?
       this.props.weight :
       undefined;
 
