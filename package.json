@@ -147,6 +147,7 @@
     "react-remarkable": "^1.1.1",
     "react-transition-group": "^2.2.1",
     "slate": "^0.20.3",
+    "unidriver": "^1.1.2",
     "wix-animations": "^1.0.141",
     "wix-eventually": "^2.2.0",
     "wix-ui-backoffice": "^1.0.299",

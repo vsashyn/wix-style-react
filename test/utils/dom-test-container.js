@@ -35,16 +35,6 @@ export class ReactDOMTestContainer {
     return this;
   }
 
-  // We're not returning the result of  ReactDOM.render() because its use
-  // is deprecated.
-  render(jsx) {
-    return new Promise(resolve => ReactDOM.render(jsx, this.node, resolve));
-  }
-
-  renderSync(jsx) {
-    return ReactDOM.render(jsx, this.node);
-  }
-
   // This function's signature should be:
   // <P, T extends React.Component<P>>(jsx: React.ComponentElement<P, T>): Promise<T>;
   // But TypeScript has this weird bug where it can derive the instance type from
@@ -79,7 +69,7 @@ export class ReactDOMTestContainer {
   // Adapter for react based uni driver
   createUniRenderer(driverFactory) {
     return jsx => {
-      this.renderSync(jsx);
+      ReactDOM.render(jsx, this.node);
       const base = reactUniDriver(this.componentNode);
       return driverFactory(base);
     };
