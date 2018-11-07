@@ -8,6 +8,11 @@ export default {
   componentPath: '../../src/TextButton',
 
   componentProps: {
-    onClick: () => alert('yey')
+    onClick: () => alert('Alert'),
+    children: 'Text button',
+    skin: 'standard',
+    underlined: 'none',
+    weight: 'thin',
+    disabled: false
   }
 };
