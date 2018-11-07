@@ -13,6 +13,7 @@ export default {
     skin: 'standard',
     underlined: 'none',
     weight: 'thin',
+    size: 'medium',
     disabled: false
   }
 };
