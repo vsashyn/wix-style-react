@@ -5,7 +5,6 @@ export const textButtonDriverFactory = base => {
   return {
     ...baseUniDriverFactory(base),
     getTextContent: async () => await base.text(),
-    isDisabled: async () => !!(await base.attr('disabled')),
-    getNative: async () => await base.getNative()
+    isDisabled: async () => !!(await base.attr('disabled'))
   };
 };
