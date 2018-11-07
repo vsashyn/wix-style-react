@@ -1,5 +1,6 @@
 import React from 'react';
 import {ButtonNext} from 'wix-ui-core/button-next';
+import classNames from 'classnames';
 import {textButton, backofficeTheme} from 'wix-ui-core/themes/backoffice';
 import {string, func, element, bool, node, oneOf} from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
@@ -60,7 +61,10 @@ class TextButton extends WixComponent {
         <ButtonNext
           data-hook="textButton-core"
           onClick={onClick}
-          className={className || textButton(skin, underlined, weight, size)}
+          className={classNames(
+            className,
+            textButton(skin, underlined, weight, size)
+          )}
           suffixIcon={suffixIcon}
           prefixIcon={prefixIcon}
           disabled={disabled}
