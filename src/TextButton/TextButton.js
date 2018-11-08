@@ -5,11 +5,6 @@ import {textButton, backofficeTheme} from 'wix-ui-core/themes/backoffice';
 import {string, func, element, bool, node, oneOf} from 'prop-types';
 import WixComponent from '../BaseComponents/WixComponent';
 
-const allowedSkins = ['standard', 'light', 'premium', 'dark'];
-const allowedUnderlined = ['none', 'onHover', 'underlined'];
-const allowedWeight = ['thin', 'normal'];
-const allowedSize = ['small', 'medium'];
-
 class TextButton extends WixComponent {
   static displayName = 'TextButton';
 
@@ -30,31 +25,22 @@ class TextButton extends WixComponent {
     skin: 'standard',
     underlined: 'none',
     weight: 'thin',
-    size: 'medium'
+    size: 'premium'
   };
 
   render() {
     const {
       onClick,
+      skin,
+      underlined,
+      weight,
+      size,
       suffixIcon,
       prefixIcon,
       children,
       disabled,
       className
     } = this.props;
-
-    const skin = allowedSkins.includes(this.props.skin) ?
-      this.props.skin :
-      undefined;
-    const size = allowedSize.includes(this.props.size) ?
-      this.props.size :
-      undefined;
-    const underlined = allowedUnderlined.includes(this.props.underlined) ?
-      this.props.underlined :
-      undefined;
-    const weight = allowedWeight.includes(this.props.weight) ?
-      this.props.weight :
-      undefined;
 
     return (
       <div className={backofficeTheme}>
