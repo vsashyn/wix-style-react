@@ -89,12 +89,21 @@ $skeletonCornerWidth: 6px;
   height: 11px;
   &.small {
     width: calc(100% - #{$smallPercentage});
+    &.middle {
+      width: calc((100% - #{$smallPercentage})/2);
+    }
   }
   &.medium {
     width: calc(100% - #{$mediumPercentage});
+    &.middle {
+      width: calc((100% - #{$mediumPercentage})/2);
+    }
   }
   &.large {
     width: calc(100% - #{$largePercentage});
+    &.middle {
+      width: calc((100% - #{$largePercentage})/2);
+    }
   }
 }
 
@@ -107,15 +116,35 @@ $skeletonCornerWidth: 6px;
   left: 0;
   &.rightSkeletonCorner {
     transform: scaleX(-1);
+    &.small {
+      left: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+      &.middle {
+        left: calc((100% - #{$smallPercentage})/2 + #{$smallPercentage} - #{$skeletonCornerWidth});
+      }
+    }
+    &.medium {
+      left: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+      &.middle {
+        left: calc((100% - #{$mediumPercentage})/2 + #{$mediumPercentage} - #{$skeletonCornerWidth});
+      }
+    }
+    &.large {
+      left: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+      &.middle {
+        left: calc((100% - #{$largePercentage})/2 + #{$largePercentage} - #{$skeletonCornerWidth});
+      }
+    }
   }
-  &.small {
-    left: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
-  }
-  &.medium {
-    left: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
-  }
-  &.large {
-    left: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+  &.middle {
+    &.small {
+      left: calc((100% - #{$smallPercentage})/2);
+    }
+    &.medium {
+      left: calc((100% - #{$mediumPercentage})/2);
+    }
+    &.large {
+      left: calc((100% - #{$largePercentage})/2);
+    }
   }
 }
 
@@ -130,15 +159,15 @@ $skeletonCornerWidth: 6px;
     transform: scaleX(-1);
     &.rightSkeletonCorner {
       transform: none;
-    }
-    &.small {
-      right: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
-    }
-    &.medium {
-      right: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
-    }
-    &.large {
-      right: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+      &.small {
+        right: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+      }
+      &.medium {
+        right: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+      }
+      &.large {
+        right: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+      }
     }
   }
 }

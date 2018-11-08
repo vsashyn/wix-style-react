@@ -6,33 +6,71 @@ import classnames from 'classnames';
 
 class PlaceholderLine extends React.PureComponent {
   static propTypes = {
-    marginBottom: PropTypes.number,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     isFirst: PropTypes.bool.isRequired,
-    spacing: PropTypes.oneOf(['small', 'medium', 'large'])
+    spacing: PropTypes.oneOf(['small', 'medium', 'large']),
+    alignment: PropTypes.oneOf(['start', 'middle', 'end'])
   }
 
   render() {
-    const {size, spacing, isFirst} = this.props;
+    const {size, spacing, isFirst, alignment} = this.props;
     return (
       <div
-        className={classnames(styles.inner, {[styles[spacing]]: true, [styles.first]: isFirst})}
+        className={
+          classnames(
+            styles.inner,
+            {
+              [styles[spacing]]: true,
+              [styles.first]: isFirst
+            }
+          )}
         >
         <div className={styles.animatedBackground}/>
         <div className={styles.concealers}>
           <div className={styles.concealerRow}>
-            <div className={styles.skeletonCorner}/>
+            {alignment === 'middle' && <div
+              className={
+                classnames(
+                  styles.concealer,
+                  {
+                    [styles[size]]: true,
+                    [styles.middle]: alignment === 'middle'
+                  }
+                )}
+              />}
             <div
-              className={classnames(
-                styles.skeletonCorner,
-                styles.rightSkeletonCorner,
-                {
-                  [styles[size]]: true
-                }
-              )}
+              className={
+                classnames(
+                  styles.skeletonCorner,
+                  {
+                    [styles[size]]: true,
+                    [styles.middle]: alignment === 'middle'
+                  }
+                )
+              }
+              />
+            <div
+              className={
+                classnames(
+                  styles.skeletonCorner,
+                  styles.rightSkeletonCorner,
+                  {
+                    [styles[size]]: true,
+                    [styles.middle]: alignment === 'middle'
+                  }
+                )}
               />
             <div className={classnames(styles.chunk, {[styles[size]]: true})}/>
-            <div className={classnames(styles.concealer, {[styles[size]]: true})}/>
+            <div
+              className={
+                classnames(
+                  styles.concealer,
+                  {
+                    [styles[size]]: true,
+                    [styles.middle]: alignment === 'middle'
+                  }
+                )}
+              />
           </div>
         </div>
       </div>
@@ -62,7 +100,13 @@ export default class Skeleton extends WixComponent {
       <div>
         {
           content.map((item, key) => (
-            <PlaceholderLine key={key} size={item.size} spacing={spacing} isFirst={key === 0}/>
+            <PlaceholderLine
+              key={key}
+              size={item.size}
+              spacing={spacing}
+              isFirst={key === 0}
+              alignment={alignment}
+              />
           ))
         }
       </div>
