@@ -1,0 +1,127 @@
+$smallPercentage: 30%;
+$mediumPercentage: 45%;
+$largePercentage: 75%;
+$skeletonCornerWidth: 6px;
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0;
+  }
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@keyframes placeHolderShimmerRtl {
+  0% {
+    background-position: 468px 0;
+  }
+  100% {
+    background-position: -468px 0;
+  }
+}
+
+.inner {
+  position: relative;
+  height: 11px;
+  margin-bottom: 16px;
+}
+
+.animatedBackground {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: linear-gradient(to right, #dfe5eb 9%, #eef2ef 18%, #dfe5eb 33%);
+  background-size: 1000px 11px;
+  height: 11px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.concealers {
+  position: absolute;
+  width: 100%;
+}
+
+.concealerRow {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.chunk {
+  height: 11px;
+  &.small {
+    width: $smallPercentage;
+  }
+  &.medium {
+    width: $mediumPercentage;
+  }
+  &.large {
+    width: $largePercentage;
+  }
+}
+
+.concealer {
+  background: white;
+  height: 11px;
+  &.small {
+    width: calc(100% - #{$smallPercentage});
+  }
+  &.medium {
+    width: calc(100% - #{$mediumPercentage});
+  }
+  &.large {
+    width: calc(100% - #{$largePercentage});
+  }
+}
+
+.skeletonCorner {
+  width: 6px;
+  height: 11px;
+  background: url(../assets/skeleton-corner.svg) no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  &.rightSkeletonCorner {
+    transform: scaleX(-1);
+  }
+  &.small {
+    left: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+  }
+  &.medium {
+    left: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+  }
+  &.large {
+    left: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+  }
+}
+
+:global(.rtl) {
+  .animatedBackground {
+    animation-name: placeHolderShimmerRtl;
+  }
+
+  .skeletonCorner {
+    right: 0;
+    left: unset;
+    transform: scaleX(-1);
+    &.rightSkeletonCorner {
+      transform: none;
+    }
+    &.small {
+      right: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+    }
+    &.medium {
+      right: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+    }
+    &.large {
+      right: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+    }
+  }
+}

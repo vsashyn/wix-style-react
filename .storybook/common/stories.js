@@ -24,6 +24,7 @@ import '../../stories/Page/FullPageExample.js'; // 2.5 + Page Example
 import '../../stories/EmptyState/EmptyState.story'; // 2.6 EmptyState
 import '../../stories/StatsWidget'; // 2.7 StatsWidget
 import '../../stories/AddItem/AddItem.story'; // 2.8 AddItem
+import '../../stories/Skeleton/index.story.js'; // 2.9 Skeleton
 import '../../stories/Grid';
 import '../../stories/Card';
 

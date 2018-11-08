@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6" height="11" viewBox="0 0 6 11">
+  <defs>
+    <path id="corner-a" d="M6,5.5 L6,11 C3.23857625,11 1,8.76142375 1,6 L1,5 C1,2.23857625 3.23857625,5.83633583e-15 6,5.32907052e-15 L6,5.5 L6,11 L0,11 L0,0 L6,0 L6,5.5 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#FFF" xlink:href="#corner-a"/>
+  </g>
+</svg>
