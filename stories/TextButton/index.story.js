@@ -11,7 +11,7 @@ export default {
     onClick: () => alert('Alert'),
     children: 'Text button',
     skin: 'standard',
-    underlined: 'none',
+    underline: 'none',
     weight: 'thin',
     size: 'medium',
     disabled: false

@@ -11,7 +11,7 @@ class TextButton extends WixComponent {
   static propTypes = {
     className: string,
     skin: oneOf(['standard', 'light', 'premium', 'dark']),
-    underlined: oneOf(['none', 'onHover', 'underlined']),
+    underline: oneOf(['none', 'onHover', 'underline']),
     weight: oneOf(['thin', 'normal']),
     size: oneOf(['small', 'medium']),
     disabled: bool,
@@ -23,7 +23,7 @@ class TextButton extends WixComponent {
 
   static defaultProps = {
     skin: 'standard',
-    underlined: 'none',
+    underline: 'none',
     weight: 'thin',
     size: 'premium'
   };
@@ -32,7 +32,7 @@ class TextButton extends WixComponent {
     const {
       onClick,
       skin,
-      underlined,
+      underline,
       weight,
       size,
       suffixIcon,
@@ -49,7 +49,7 @@ class TextButton extends WixComponent {
           onClick={onClick}
           className={classNames(
             className,
-            textButton(skin, underlined, weight, size)
+            textButton(skin, underline, weight, size)
           )}
           suffixIcon={suffixIcon}
           prefixIcon={prefixIcon}
