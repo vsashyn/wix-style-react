@@ -24,7 +24,24 @@ $skeletonCornerWidth: 6px;
 .inner {
   position: relative;
   height: 11px;
-  margin-bottom: 16px;
+  &.small {
+    margin-bottom: 10px;
+    &.first {
+      margin-bottom: 23px;
+    }
+  }
+  &.medium {
+    margin-bottom: 16px;
+    &.first {
+      margin-bottom: 36px;
+    }
+  }
+  &.large {
+    margin-bottom: 22px;
+    &.first {
+      margin-bottom: 50px;
+    }
+  }
 }
 
 .animatedBackground {

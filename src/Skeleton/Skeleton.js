@@ -7,16 +7,17 @@ import classnames from 'classnames';
 class PlaceholderLine extends React.PureComponent {
   static propTypes = {
     marginBottom: PropTypes.number,
-    // width: PropTypes.number
-    size: PropTypes.oneOf(['small', 'medium', 'large'])
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    isFirst: PropTypes.bool.isRequired,
+    spacing: PropTypes.oneOf(['small', 'medium', 'large'])
   }
-  skeletonCornerWidth = 6;
-  // style={{left: size - this.skeletonCornerWidth}}
 
   render() {
-    const {marginBottom, size} = this.props;
+    const {size, spacing, isFirst} = this.props;
     return (
-      <div className={styles.inner} style={{marginBottom}}>
+      <div
+        className={classnames(styles.inner, {[styles[spacing]]: true, [styles.first]: isFirst})}
+        >
         <div className={styles.animatedBackground}/>
         <div className={styles.concealers}>
           <div className={styles.concealerRow}>
@@ -40,12 +41,30 @@ class PlaceholderLine extends React.PureComponent {
 }
 
 export default class Skeleton extends WixComponent {
+  static propTypes = {
+    content: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.oneOf(['line']),
+        size: PropTypes.oneOf(['small', 'medium', 'large'])
+      })).isRequired,
+    alignment: PropTypes.oneOf(['start', 'middle', 'end']),
+    spacing: PropTypes.oneOf(['small', 'medium', 'large'])
+  }
+
+  static defaultProps = {
+    alignment: 'start',
+    spacing: 'medium'
+  }
+
   render() {
+    const {content, alignment, spacing} = this.props;
     return (
       <div>
-        <PlaceholderLine size={'small'} marginBottom={36}/>
-        <PlaceholderLine size={'large'}/>
-        <PlaceholderLine size={'medium'}/>
+        {
+          content.map((item, key) => (
+            <PlaceholderLine key={key} size={item.size} spacing={spacing} isFirst={key === 0}/>
+          ))
+        }
       </div>
     );
   }
