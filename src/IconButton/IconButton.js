@@ -1,6 +1,6 @@
 import React from 'react';
 import {ButtonNext} from 'wix-ui-core/button-next';
-import classNames from 'classnames';
+import cx from 'classnames';
 import {iconButton, backofficeTheme} from 'wix-ui-core/themes/backoffice';
 import {string, node, bool, oneOf} from 'prop-types';
 
@@ -40,7 +40,7 @@ class IconButton extends WixComponent {
         <ButtonNext
           {...rest}
           data-hook="iconButton-core"
-          className={classNames(className, iconButton(skin, priority, size))}
+          className={cx(className, iconButton(skin, priority, size))}
           disabled={disabled}
           >
           {React.cloneElement(children, {
