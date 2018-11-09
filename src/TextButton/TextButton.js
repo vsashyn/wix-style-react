@@ -25,7 +25,7 @@ class TextButton extends WixComponent {
     skin: 'standard',
     underline: 'none',
     weight: 'thin',
-    size: 'premium'
+    size: 'medium'
   };
 
   render() {
