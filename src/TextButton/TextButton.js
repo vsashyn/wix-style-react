@@ -39,12 +39,14 @@ class TextButton extends WixComponent {
       prefixIcon,
       children,
       disabled,
-      className
+      className,
+      ...rest
     } = this.props;
 
     return (
       <div className={backofficeTheme}>
         <ButtonNext
+          {...rest}
           data-hook="textButton-core"
           onClick={onClick}
           className={classNames(
