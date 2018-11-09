@@ -6,6 +6,11 @@ import {string, node, bool, oneOf} from 'prop-types';
 
 import WixComponent from '../BaseComponents/WixComponent';
 
+const ICON_SIZES = {
+  small: '18px',
+  medium: '24px'
+};
+
 class IconButton extends WixComponent {
   static displayName = 'IconButton';
 
@@ -35,6 +40,7 @@ class IconButton extends WixComponent {
       disabled,
       ...rest
     } = this.props;
+    const iconSize = ICON_SIZES[size];
     return (
       <div className={backofficeTheme}>
         <ButtonNext
@@ -43,7 +49,7 @@ class IconButton extends WixComponent {
           className={classNames(className, iconButton(skin, priority, size))}
           disabled={disabled}
           >
-          {children}
+          {React.cloneElement(children, {size: iconSize})}
         </ButtonNext>
       </div>
     );
