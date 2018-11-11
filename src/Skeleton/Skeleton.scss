@@ -3,21 +3,25 @@ $mediumPercentage: 45%;
 $largePercentage: 75%;
 $skeletonCornerWidth: 6px;
 
+@function mid-corner-position($percentage) {
+  @return calc(#{concealer-width($percentage, true)} + #{corner-position($percentage)});
+}
+
+@function corner-position($percentage) {
+  @return calc(#{$percentage} - #{$skeletonCornerWidth});
+}
+
+@function concealer-width($percentage, $middle: false) {
+  $divider: if($middle, 2, 1);
+  @return calc((100% - #{$percentage})/#{$divider});
+}
+
 @keyframes placeHolderShimmer {
   0% {
     background-position: -468px 0;
   }
   100% {
     background-position: 468px 0;
-  }
-}
-
-@keyframes placeHolderShimmerRtl {
-  0% {
-    background-position: 468px 0;
-  }
-  100% {
-    background-position: -468px 0;
   }
 }
 
@@ -88,21 +92,21 @@ $skeletonCornerWidth: 6px;
   background: white;
   height: 11px;
   &.small {
-    width: calc(100% - #{$smallPercentage});
+    width: concealer-width($smallPercentage);
     &.middle {
-      width: calc((100% - #{$smallPercentage})/2);
+      width: concealer-width($smallPercentage, true);
     }
   }
   &.medium {
-    width: calc(100% - #{$mediumPercentage});
+    width: concealer-width($mediumPercentage);
     &.middle {
-      width: calc((100% - #{$mediumPercentage})/2);
+      width: concealer-width($mediumPercentage, true);
     }
   }
   &.large {
-    width: calc(100% - #{$largePercentage});
+    width: concealer-width($largePercentage);
     &.middle {
-      width: calc((100% - #{$largePercentage})/2);
+      width: concealer-width($largePercentage, true)
     }
   }
 }
@@ -117,40 +121,41 @@ $skeletonCornerWidth: 6px;
   &.rightSkeletonCorner {
     transform: scaleX(-1);
     &.small {
-      left: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+      left: corner-position($smallPercentage);
       &.middle {
-        left: calc((100% - #{$smallPercentage})/2 + #{$smallPercentage} - #{$skeletonCornerWidth});
+        left: mid-corner-position($smallPercentage);
       }
     }
     &.medium {
-      left: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+      left: corner-position($mediumPercentage);
       &.middle {
-        left: calc((100% - #{$mediumPercentage})/2 + #{$mediumPercentage} - #{$skeletonCornerWidth});
+        left: mid-corner-position($mediumPercentage);
       }
     }
     &.large {
-      left: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+      left: corner-position($largePercentage);
       &.middle {
-        left: calc((100% - #{$largePercentage})/2 + #{$largePercentage} - #{$skeletonCornerWidth});
+        left: mid-corner-position($largePercentage);
       }
     }
   }
   &.middle {
     &.small {
-      left: calc((100% - #{$smallPercentage})/2);
+      left: concealer-width($smallPercentage, true);
     }
     &.medium {
-      left: calc((100% - #{$mediumPercentage})/2);
+      left: concealer-width($mediumPercentage, true);
     }
     &.large {
-      left: calc((100% - #{$largePercentage})/2);
+      left: concealer-width($largePercentage, true)
     }
   }
 }
 
 :global(.rtl) {
   .animatedBackground {
-    animation-name: placeHolderShimmerRtl;
+    animation-name: placeHolderShimmer;
+    animation-direction: reverse;
   }
 
   .skeletonCorner {
@@ -160,13 +165,13 @@ $skeletonCornerWidth: 6px;
     &.rightSkeletonCorner {
       transform: none;
       &.small {
-        right: calc(#{$smallPercentage} - #{$skeletonCornerWidth});
+        right: corner-position($smallPercentage);
       }
       &.medium {
-        right: calc(#{$mediumPercentage} - #{$skeletonCornerWidth});
+        right: corner-position($mediumPercentage);
       }
       &.large {
-        right: calc(#{$largePercentage} - #{$skeletonCornerWidth});
+        right: corner-position($largePercentage);
       }
     }
   }
