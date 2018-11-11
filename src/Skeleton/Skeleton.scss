@@ -30,19 +30,21 @@ $skeletonCornerWidth: 6px;
   height: 11px;
   &.small {
     margin-bottom: 10px;
-    &.first {
-      margin-bottom: 23px;
-    }
   }
   &.medium {
     margin-bottom: 16px;
-    &.first {
-      margin-bottom: 36px;
-    }
   }
   &.large {
     margin-bottom: 22px;
-    &.first {
+  }
+  &.first {
+    &.small {
+      margin-bottom: 23px;
+    }
+    &.medium {
+      margin-bottom: 36px;
+    }
+    &.large {
       margin-bottom: 50px;
     }
   }
@@ -93,21 +95,12 @@ $skeletonCornerWidth: 6px;
   height: 11px;
   &.small {
     width: concealer-width($smallPercentage);
-    &.middle {
-      width: concealer-width($smallPercentage, true);
-    }
   }
   &.medium {
     width: concealer-width($mediumPercentage);
-    &.middle {
-      width: concealer-width($mediumPercentage, true);
-    }
   }
   &.large {
     width: concealer-width($largePercentage);
-    &.middle {
-      width: concealer-width($largePercentage, true)
-    }
   }
 }
 
@@ -122,24 +115,29 @@ $skeletonCornerWidth: 6px;
     transform: scaleX(-1);
     &.small {
       left: corner-position($smallPercentage);
-      &.middle {
-        left: mid-corner-position($smallPercentage);
-      }
     }
     &.medium {
       left: corner-position($mediumPercentage);
-      &.middle {
-        left: mid-corner-position($mediumPercentage);
-      }
     }
     &.large {
       left: corner-position($largePercentage);
-      &.middle {
-        left: mid-corner-position($largePercentage);
-      }
     }
   }
-  &.middle {
+}
+
+.middle {
+  .concealer {
+    &.small {
+      width: concealer-width($smallPercentage, true);
+    }
+    &.medium {
+      width: concealer-width($mediumPercentage, true);
+    }
+    &.large {
+      width: concealer-width($largePercentage, true)
+    }
+  }
+  .skeletonCorner {
     &.small {
       left: concealer-width($smallPercentage, true);
     }
@@ -148,6 +146,17 @@ $skeletonCornerWidth: 6px;
     }
     &.large {
       left: concealer-width($largePercentage, true)
+    }
+    &.rightSkeletonCorner {
+      &.small {
+        left: mid-corner-position($smallPercentage);
+      }
+      &.medium {
+        left: mid-corner-position($mediumPercentage);
+      }
+      &.large {
+        left: mid-corner-position($largePercentage);
+      }
     }
   }
 }

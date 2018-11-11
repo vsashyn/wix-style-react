@@ -21,7 +21,8 @@ class PlaceholderLine extends React.PureComponent {
             styles.inner,
             {
               [styles[spacing]]: true,
-              [styles.first]: isFirst
+              [styles.first]: isFirst,
+              [styles.middle]: alignment === 'middle'
             }
           )}
         >
@@ -33,8 +34,7 @@ class PlaceholderLine extends React.PureComponent {
                 classnames(
                   styles.concealer,
                   {
-                    [styles[size]]: true,
-                    [styles.middle]: alignment === 'middle'
+                    [styles[size]]: true
                   }
                 )}
               />}
@@ -43,8 +43,7 @@ class PlaceholderLine extends React.PureComponent {
                 classnames(
                   styles.skeletonCorner,
                   {
-                    [styles[size]]: true,
-                    [styles.middle]: alignment === 'middle'
+                    [styles[size]]: true
                   }
                 )
               }
@@ -55,8 +54,7 @@ class PlaceholderLine extends React.PureComponent {
                   styles.skeletonCorner,
                   styles.rightSkeletonCorner,
                   {
-                    [styles[size]]: true,
-                    [styles.middle]: alignment === 'middle'
+                    [styles[size]]: true
                   }
                 )}
               />
@@ -66,8 +64,7 @@ class PlaceholderLine extends React.PureComponent {
                 classnames(
                   styles.concealer,
                   {
-                    [styles[size]]: true,
-                    [styles.middle]: alignment === 'middle'
+                    [styles[size]]: true
                   }
                 )}
               />
