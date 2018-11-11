@@ -12,6 +12,25 @@ class PlaceholderLine extends React.PureComponent {
     alignment: PropTypes.oneOf(['start', 'middle', 'end'])
   }
 
+  renderConcealer() {
+    return <div className={classnames(styles.concealer, styles[this.props.size])}/>;
+  }
+
+  renderCorner(rightCorner = false) {
+    return (
+      <div
+        className={
+          classnames(
+            styles.skeletonCorner,
+            styles[this.props.size],
+            {
+              [styles.rightSkeletonCorner]: rightCorner
+            }
+          )}
+        />
+    );
+  }
+
   render() {
     const {size, spacing, isFirst, alignment} = this.props;
     return (
@@ -19,8 +38,8 @@ class PlaceholderLine extends React.PureComponent {
         className={
           classnames(
             styles.inner,
+            styles[spacing],
             {
-              [styles[spacing]]: true,
               [styles.first]: isFirst,
               [styles.middle]: alignment === 'middle'
             }
@@ -29,45 +48,11 @@ class PlaceholderLine extends React.PureComponent {
         <div className={styles.animatedBackground}/>
         <div className={styles.concealers}>
           <div className={styles.concealerRow}>
-            {alignment === 'middle' && <div
-              className={
-                classnames(
-                  styles.concealer,
-                  {
-                    [styles[size]]: true
-                  }
-                )}
-              />}
-            <div
-              className={
-                classnames(
-                  styles.skeletonCorner,
-                  {
-                    [styles[size]]: true
-                  }
-                )
-              }
-              />
-            <div
-              className={
-                classnames(
-                  styles.skeletonCorner,
-                  styles.rightSkeletonCorner,
-                  {
-                    [styles[size]]: true
-                  }
-                )}
-              />
-            <div className={classnames(styles.chunk, {[styles[size]]: true})}/>
-            <div
-              className={
-                classnames(
-                  styles.concealer,
-                  {
-                    [styles[size]]: true
-                  }
-                )}
-              />
+            {alignment === 'middle' && this.renderConcealer()}
+            {this.renderCorner()}
+            {this.renderCorner(true)}
+            <div className={classnames(styles.chunk, styles[size])}/>
+            {this.renderConcealer()}
           </div>
         </div>
       </div>

@@ -167,20 +167,22 @@ $skeletonCornerWidth: 6px;
     animation-direction: reverse;
   }
 
-  .skeletonCorner {
-    right: 0;
-    left: unset;
-    transform: scaleX(-1);
-    &.rightSkeletonCorner {
-      transform: none;
-      &.small {
-        right: corner-position($smallPercentage);
-      }
-      &.medium {
-        right: corner-position($mediumPercentage);
-      }
-      &.large {
-        right: corner-position($largePercentage);
+  .inner:not(.middle) {
+    .skeletonCorner {
+      right: 0;
+      left: unset;
+      transform: scaleX(-1);
+      &.rightSkeletonCorner {
+        transform: none;
+        &.small {
+          right: corner-position($smallPercentage);
+        }
+        &.medium {
+          right: corner-position($mediumPercentage);
+        }
+        &.large {
+          right: corner-position($largePercentage);
+        }
       }
     }
   }
