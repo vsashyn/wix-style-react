@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {ButtonNext} from 'wix-ui-core/button-next';
-import classNames from 'classnames';
+import cx from 'classnames';
 import {textButton, backofficeTheme} from 'wix-ui-core/themes/backoffice';
-import {string, func, element, bool, node, oneOf} from 'prop-types';
-import WixComponent from '../BaseComponents/WixComponent';
+import {string, node, oneOf} from 'prop-types';
 
-class TextButton extends WixComponent {
+class TextButton extends Component {
   static displayName = 'TextButton';
 
   static propTypes = {
@@ -14,11 +13,8 @@ class TextButton extends WixComponent {
     underline: oneOf(['none', 'onHover', 'underline']),
     weight: oneOf(['thin', 'normal']),
     size: oneOf(['small', 'medium']),
-    disabled: bool,
-    onClick: func,
-    suffixIcon: element,
-    prefixIcon: element,
-    children: node
+    children: node,
+    dataHook: string
   };
 
   static defaultProps = {
@@ -30,32 +26,24 @@ class TextButton extends WixComponent {
 
   render() {
     const {
-      onClick,
       skin,
       underline,
       weight,
       size,
-      suffixIcon,
-      prefixIcon,
       children,
-      disabled,
       className,
+      dataHook,
       ...rest
     } = this.props;
 
+    const classNames = cx(className, textButton(skin, underline, weight, size));
+
     return (
-      <div className={backofficeTheme}>
+      <div className={backofficeTheme} data-hook={dataHook}>
         <ButtonNext
           {...rest}
           data-hook="textButton-core"
-          onClick={onClick}
-          className={classNames(
-            className,
-            textButton(skin, underline, weight, size)
-          )}
-          suffixIcon={suffixIcon}
-          prefixIcon={prefixIcon}
-          disabled={disabled}
+          className={classNames}
           >
           {children}
         </ButtonNext>
