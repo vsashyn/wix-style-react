@@ -1,5 +1,6 @@
 import {enzymeTestkitFactoryCreator} from 'wix-ui-test-utils/enzyme';
 
+
 import inputDriverFactory from '../src/Input/Input.driver';
 export const inputTestkitFactory = enzymeTestkitFactoryCreator(inputDriverFactory);
 
@@ -239,3 +240,9 @@ export {
   linearProgressBarTestkitFactory,
   circularProgressBarTestkitFactory
 } from 'wix-ui-backoffice/dist/src/testkit/enzyme';
+
+// wix-ui-core proxy
+
+import {buttonNextTestkitFactory} from 'wix-ui-core/dist/src/testkit/enzyme';
+
+export const textButtonTestkitFactory = buttonNextTestkitFactory;
