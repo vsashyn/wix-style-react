@@ -1,20 +1,13 @@
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
-import {mount} from 'enzyme';
 
 import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
-import {breadcrumbsTestkitFactory} from '../../testkit';
-import {breadcrumbsTestkitFactory as enzymeBreadcrumbsTestkitFactory} from '../../testkit/enzyme';
 import breadcrumbsDriverFactory from './Breadcrumbs.driver';
 
 import Breadcrumbs from './Breadcrumbs';
 
 describe('Breadcrumbs', () => {
   const createDriver = createDriverFactory(breadcrumbsDriverFactory);
-  const items = [
-    {id: 0, value: 'Option 1'},
-    {id: 1, value: 'Option 2'}
-  ];
+  const items = [{id: 0, value: 'Option 1'}, {id: 1, value: 'Option 2'}];
   let onClick;
   let driver;
 
@@ -38,7 +31,10 @@ describe('Breadcrumbs', () => {
     const itemIndex = 1;
 
     driver.clickBreadcrumbAt(itemIndex);
-    expect(onClick).toBeCalledWith({id: items[itemIndex].id, value: 'Option 2'});
+    expect(onClick).toBeCalledWith({
+      id: items[itemIndex].id,
+      value: 'Option 2'
+    });
   });
 
   it('should get correct size from props', () => {
@@ -101,12 +97,25 @@ describe('Breadcrumbs', () => {
 
   describe('customElement attribute', () => {
     const customItems = [
-      {id: 0, value: 'Option 1', customElement: <a href="//www.wix.com">Option 1</a>},
-      {id: 1, value: 'Option 2', customElement: <a href="//www.facebook.com">Option 2</a>}
+      {
+        id: 0,
+        value: 'Option 1',
+        customElement: <a href="//www.wix.com">Option 1</a>
+      },
+      {
+        id: 1,
+        value: 'Option 2',
+        customElement: <a href="//www.facebook.com">Option 2</a>
+      }
     ];
 
     const customItemsWithLinks = [
-      {id: 0, value: 'value', customElement: <a href="//www.wix.com">Custom value</a>, link: 'www.bla.com'}
+      {
+        id: 0,
+        value: 'value',
+        customElement: <a href="//www.wix.com">Custom value</a>,
+        link: 'www.bla.com'
+      }
     ];
 
     it('should render the customElement when given', () => {
@@ -118,7 +127,6 @@ describe('Breadcrumbs', () => {
     });
 
     it('should render the customElement even if link attribute is given', () => {
-
       createComponent({items: customItemsWithLinks});
 
       expect(driver.breadcrumbsLength()).toBe(customItemsWithLinks.length);
@@ -129,25 +137,6 @@ describe('Breadcrumbs', () => {
       createComponent({items: customItemsWithLinks, activeId: 0});
 
       expect(driver.breadcrumbContentAt(0)).toBe(customItemsWithLinks[0].value);
-    });
-  });
-
-  describe('testkit', () => {
-    it('should exist', () => {
-      const div = document.createElement('div');
-      const dataHook = 'myDataHook';
-      const wrapper = div.appendChild(ReactTestUtils.renderIntoDocument(<div><Breadcrumbs onClick={onClick} items={items} dataHook={dataHook}/></div>));
-      const breadcrumbsTestkit = breadcrumbsTestkitFactory({wrapper, dataHook});
-      expect(breadcrumbsTestkit.exists()).toBeTruthy();
-    });
-  });
-
-  describe('enzyme testkit', () => {
-    it('should exist', () => {
-      const dataHook = 'myDataHook';
-      const wrapper = mount(<Breadcrumbs onClick={onClick} items={items} dataHook={dataHook}/>);
-      const breadcrumbsTestkit = enzymeBreadcrumbsTestkitFactory({wrapper, dataHook});
-      expect(breadcrumbsTestkit.exists()).toBeTruthy();
     });
   });
 });

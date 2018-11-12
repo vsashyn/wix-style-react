@@ -21,7 +21,6 @@ import * as enzymeTestkitFactories from './enzyme';
 const FAILING_COMPONENTS = [
   'AutoCompleteComposite',
   'BadgeSelectItemBuilder',
-  'Breadcrumbs',
   'ButtonLayout',
   'ButtonWithOptions',
   'Calendar',
@@ -90,6 +89,9 @@ const REQUIRED_PROPS = {
   BadgeSelect: {
     options: [{id: '0', skin: 'general', text: 'general'}],
     selectedId: '0'
+  },
+  Breadcrumbs: {
+    items: [{id: 0, value: 'Option 1'}, {id: 1, value: 'Option 2'}]
   }
 };
 
