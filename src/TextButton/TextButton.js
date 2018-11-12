@@ -10,7 +10,7 @@ class TextButton extends Component {
   static propTypes = {
     className: string,
     skin: oneOf(['standard', 'light', 'premium', 'dark']),
-    underline: oneOf(['none', 'onHover', 'underline']),
+    underline: oneOf(['none', 'onHover', 'always']),
     weight: oneOf(['thin', 'normal']),
     size: oneOf(['small', 'medium']),
     children: node,
