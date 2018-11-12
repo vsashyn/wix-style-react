@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactTestUtils from 'react-dom/test-utils';
 import selectorDriverFactory from './Selector.driver';
 import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
-import {selectorTestkitFactory} from '../../testkit';
 import Selector from './Selector';
-import {selectorTestkitFactory as enzymeSelectorTestkitFactory} from '../../testkit/enzyme';
-import {mount} from 'enzyme';
 
 describe('Selector', () => {
   const createDriver = createDriverFactory(selectorDriverFactory);
@@ -54,7 +50,9 @@ describe('Selector', () => {
   });
 
   it('should render the image', () => {
-    const driver = createDriver(<Selector {...defaultProps} image={<img src="img.png"/>}/>);
+    const driver = createDriver(
+      <Selector {...defaultProps} image={<img src="img.png"/>}/>
+    );
     expect(driver.hasImage()).toBe(true);
     expect(driver.getImage()).toBeInstanceOf(HTMLImageElement);
     expect(driver.getImage().src).toBe('img.png');
@@ -72,7 +70,6 @@ describe('Selector', () => {
     expect(driver.toggleType()).toBe(toggleType);
   });
 
-
   it('should render a radio toggle', () => {
     const toggleType = 'radio';
     const props = {...defaultProps, ...{toggleType}};
@@ -84,7 +81,9 @@ describe('Selector', () => {
     const onToggle = jest.fn();
     const toggleType = 'radio';
     const props = {...defaultProps, ...{toggleType}};
-    const driver = createDriver(<Selector onToggle={onToggle} {...props} isDisabled/>);
+    const driver = createDriver(
+      <Selector onToggle={onToggle} {...props} isDisabled/>
+    );
 
     driver.toggle();
 
@@ -114,25 +113,6 @@ describe('Selector', () => {
 
         expect(driver[method](size)).toBe(true);
       });
-    });
-  });
-
-  describe('testkit', () => {
-    it('should exist', () => {
-      const div = document.createElement('div');
-      const dataHook = 'myDataHook';
-      const wrapper = div.appendChild(ReactTestUtils.renderIntoDocument(<div><Selector {...defaultProps} dataHook={dataHook}/></div>));
-      const selectorTestkit = selectorTestkitFactory({wrapper, dataHook});
-      expect(selectorTestkit.exists()).toBeTruthy();
-    });
-  });
-
-  describe('enzyme testkit', () => {
-    it('should exist', () => {
-      const dataHook = 'myDataHook';
-      const wrapper = mount(<Selector {...defaultProps} dataHook={dataHook}/>);
-      const selectorTestkit = enzymeSelectorTestkitFactory({wrapper, dataHook});
-      expect(selectorTestkit.exists()).toBeTruthy();
     });
   });
 });

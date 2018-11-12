@@ -55,7 +55,6 @@ const FAILING_COMPONENTS = [
   'Range',
   'RichTextArea',
   'RichTextAreaComposite',
-  'Selector',
   'SideMenuDrill',
   'StatsWidget',
   'Table',
@@ -97,6 +96,10 @@ const REQUIRED_PROPS = {
 
   Slider: {
     onChange: () => {}
+  },
+  Selector: {
+    id: 1,
+    title: 'title'
   }
 };
 
