@@ -4,7 +4,7 @@ export const textButtonDriverFactory = base => {
   base = base.$('[data-hook="textButton-core"]');
   return {
     ...baseUniDriverFactory(base),
-    getTextContent: async () => await base.text(),
+    getText: async () => await base.text(),
     isDisabled: async () => !!(await base.attr('disabled'))
   };
 };
