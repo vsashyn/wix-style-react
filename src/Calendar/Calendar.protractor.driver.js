@@ -14,12 +14,14 @@ const calendarDriverFactory = component => {
   const getNthMonth = n => component.$(`[data-hook="datepicker-month-dropdown-menu"] [data-hook="dropdown-item-${n === 0 ? n : n - 1}"]`);
   const getCalendarWrapper = () => component.$('.DayPicker-wrapper');
   const getKeyboardSelectedDay = () => component.$('.DayPicker-Day:focus');
+  const getSelectedDays = () => component.$$('[role="gridcell"][aria-selected=true]');
 
   return {
     getElement: () => getCalendar(),
     exists: () => getCalendar().isPresent(),
     isYearInViewPort: year => browser.wait(EC.visibilityOf(getYear(year)), 5000),
     isVisible: () => getCalendar().isDisplayed(),
+    getSelectedDays: () => getSelectedDays().map(elem => elem.getText()),
     clickOnNthAvailableDay: (n = 0) => getNthAvailableDay(n).click(),
     openYearDropdownOptions: () => getYearDropdown().click(),
     clickOnNthYear: (n = 1) => getNthYear(n).click(),

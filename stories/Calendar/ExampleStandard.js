@@ -8,7 +8,7 @@ class ControlledCalendarExample extends React.Component {
     super(props);
     this.state = {
       date: new Date('2017/05/01'),
-      selectedDays: {from: new Date('2017/05/12'), to: new Date('2017/05/18')},
+      selectedDays: {from: new Date('2017/05/02'), to: new Date('2017/05/05')},
       excludePastDates: true
     };
   }

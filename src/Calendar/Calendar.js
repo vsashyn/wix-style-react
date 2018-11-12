@@ -27,7 +27,8 @@ export default class Calendar extends WixComponent {
     super(props);
 
     this.state = {
-      month: this._getMonth(props)
+      month: this._getMonth(props),
+      rangeSelection: {}
     };
   }
 
@@ -39,8 +40,19 @@ export default class Calendar extends WixComponent {
   _setMonth = month => this.setState({month});
 
   _handleDayClick = (value, modifiers = {}) => {
-    this.props.onSelectedDaysChange(value, modifiers);
-    this.props.shouldCloseOnSelect && this.props.onClose();
+    if (this.props.selectionMode === 'range') {
+      if (!this.state.rangeSelection.from || this.state.rangeSelection.to) {
+        this.setState({rangeSelection: {from: value}});
+      } else {
+        const newVal = {from: this.state.rangeSelection.from, to: value};
+        this.setState({rangeSelection: newVal});
+        (this.props.onSelectedDaysChange || this.props.onChange)(value, modifiers);
+        this.props.shouldCloseOnSelect && this.props.onClose();
+      }
+    } else {
+      (this.props.onSelectedDaysChange || this.props.onChange)(value, modifiers);
+      this.props.shouldCloseOnSelect && this.props.onClose();
+    }
   };
 
   _getMonth = props => {
@@ -49,7 +61,8 @@ export default class Calendar extends WixComponent {
       selectedDays
     } = props;
 
-    return (selectedDays || {}).from || (selectedDays || {}).to || selectedDays || value;
+    let {from, to} = selectedDays || {};
+    return from || to || selectedDays || value;
   }
 
   _createDayPickerProps = () => {
@@ -200,17 +213,17 @@ Calendar.propTypes = {
   /** (Deprecated) The selected date */
   value: (props, propName) => {
     if (props[propName]) {
-      const msg = 'Calendar\'s onValue prop is deprecated, please use onSelectedDaysChange instead.';
+      const msg = 'Calendar\'s onValue prop is deprecated, please use selectedDays instead.';
       const key = msg;
       deprecationLog(msg, key);
     }
   },
 
   /** The selected date range. Can be either a single JS Date object, or a single range object {from: Date, to: Date} */
-  selectedDays: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.array
-  ]),
+  selectedDays: PropTypes.object,
+
+  /** Whether the user should be able to select a date range, or just a single day */
+  selectionMode: PropTypes.oneOf(['day', 'range']),
 
   /** Display a selectable yearDropdown */
   showYearDropdown: PropTypes.bool,
