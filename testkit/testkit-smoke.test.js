@@ -65,6 +65,7 @@ const FAILING_COMPONENTS = [
   'TableToolbar',
   'Tabs',
   'TextArea',
+  'TextButton',
   'TextField',
   'Tooltip',
   'VBox'
