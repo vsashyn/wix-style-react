@@ -56,7 +56,6 @@ const FAILING_COMPONENTS = [
   'RichTextArea',
   'RichTextAreaComposite',
   'SideMenuDrill',
-  'StatsWidget',
   'Table',
   'TableToolbar',
   'Tabs',
@@ -100,6 +99,9 @@ const REQUIRED_PROPS = {
   Selector: {
     id: 1,
     title: 'title'
+  },
+  StatsWidget: {
+    title: 'test title'
   }
 };
 

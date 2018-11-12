@@ -3,55 +3,55 @@ import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
 import statsWidgetDriverFactory from './StatsWidget.driver';
 import StatsWidget from './StatsWidget';
 import ButtonWithOptions from '../../src/ButtonWithOptions';
-import {isEnzymeTestkitExists, isTestkitExists} from '../../test/utils/testkit-sanity';
-import {statsWidgetTestkitFactory} from '../../testkit';
-import {statsWidgetTestkitFactory as enzymeStatsWidgetTestkitFactory} from '../../testkit/enzyme';
-import {mount} from 'enzyme';
 
 describe('StatsWidget', () => {
   const createDriver = createDriverFactory(statsWidgetDriverFactory);
 
   const title = 'Stats Widget title';
-  const statistics = [{
-    title: '10$',
-    subtitle: 'Revenue'
-  },
-  {
-    title: '2',
-    subtitle: 'Products'
-  },
-  {
-    title: '1',
-    subtitle: 'Transactions'
-  },
-  {
-    title: '5',
-    subtitle: 'Profit'
-  },
-  {
-    title: '15',
-    subtitle: 'Music'
-  }];
+  const statistics = [
+    {
+      title: '10$',
+      subtitle: 'Revenue'
+    },
+    {
+      title: '2',
+      subtitle: 'Products'
+    },
+    {
+      title: '1',
+      subtitle: 'Transactions'
+    },
+    {
+      title: '5',
+      subtitle: 'Profit'
+    },
+    {
+      title: '15',
+      subtitle: 'Music'
+    }
+  ];
 
-  const statisticsWithPercents = [{
-    title: '10$',
-    subtitle: 'Revenue',
-    percent: 15
-  },
-  {
-    title: '2',
-    subtitle: 'Products',
-    percent: -15
-  },
-  {
-    title: '1',
-    subtitle: 'Transactions',
-    percent: 0
-  }];
+  const statisticsWithPercents = [
+    {
+      title: '10$',
+      subtitle: 'Revenue',
+      percent: 15
+    },
+    {
+      title: '2',
+      subtitle: 'Products',
+      percent: -15
+    },
+    {
+      title: '1',
+      subtitle: 'Transactions',
+      percent: 0
+    }
+  ];
 
   let driver;
 
-  const stub = console.error = jest.fn();
+  const stub = (console.error = jest.fn());
 
   function createComponent(props) {
     driver = createDriver(<StatsWidget {...props}/>);
@@ -88,8 +88,12 @@ describe('StatsWidget', () => {
 
   it('should show abs of percentage', () => {
     createComponent({title, statistics: statisticsWithPercents});
-    expect(driver.getStatisticPercentValue(0)).toBe(Math.abs(statisticsWithPercents[0].percent) + '%');
-    expect(driver.getStatisticPercentValue(1)).toBe(Math.abs(statisticsWithPercents[1].percent) + '%');
+    expect(driver.getStatisticPercentValue(0)).toBe(
+      Math.abs(statisticsWithPercents[0].percent) + '%'
+    );
+    expect(driver.getStatisticPercentValue(1)).toBe(
+      Math.abs(statisticsWithPercents[1].percent) + '%'
+    );
   });
 
   it('should put proper classes to percentage according to value', () => {
@@ -103,66 +107,94 @@ describe('StatsWidget', () => {
   });
 
   it('should show filter with ButtonWithOptions inside', () => {
-    const children = (<StatsWidget.Filter selectedId={1} dataHook="stats-widget-filter" onSelect={stub}><ButtonWithOptions.Button/>{[<ButtonWithOptions.Option key={1}>value</ButtonWithOptions.Option>]}</StatsWidget.Filter>);
+    const children = (
+      <StatsWidget.Filter
+        selectedId={1}
+        dataHook="stats-widget-filter"
+        onSelect={stub}
+        >
+        <ButtonWithOptions.Button/>
+        {[<ButtonWithOptions.Option key={1}>value</ButtonWithOptions.Option>]}
+      </StatsWidget.Filter>
+    );
     createComponent({title, statistics, children});
-    expect(driver.getFilterDriver('stats-widget-filter').dropdownLayoutDriver.exists()).toBe(true);
+    expect(
+      driver
+        .getFilterDriver('stats-widget-filter')
+        .dropdownLayoutDriver.exists()
+    ).toBe(true);
   });
 
   it('filters should have selectable options', () => {
     const stub = jest.fn();
-    const children = (<StatsWidget.Filter selectedId={1} dataHook="stats-widget-filter" onSelect={stub}><ButtonWithOptions.Button/>{[<ButtonWithOptions.Option key={1}>value</ButtonWithOptions.Option>]}</StatsWidget.Filter>);
+    const children = (
+      <StatsWidget.Filter
+        selectedId={1}
+        dataHook="stats-widget-filter"
+        onSelect={stub}
+        >
+        <ButtonWithOptions.Button/>
+        {[<ButtonWithOptions.Option key={1}>value</ButtonWithOptions.Option>]}
+      </StatsWidget.Filter>
+    );
     createComponent({title, statistics, children});
-    driver.getFilterDriver('stats-widget-filter').dropdownLayoutDriver.clickAtOption(0);
+    driver
+      .getFilterDriver('stats-widget-filter')
+      .dropdownLayoutDriver.clickAtOption(0);
     expect(stub).toHaveBeenCalled();
   });
 
   it('should show filters with option value specified', () => {
     const value = 'Last Week';
-    const children = (<StatsWidget.Filter selectedId={1} dataHook="stats-widget-filter" onSelect={stub}><ButtonWithOptions.Button/>{[<ButtonWithOptions.Option key={1}>{value}</ButtonWithOptions.Option>]}</StatsWidget.Filter>);
+    const children = (
+      <StatsWidget.Filter
+        selectedId={1}
+        dataHook="stats-widget-filter"
+        onSelect={stub}
+        >
+        <ButtonWithOptions.Button/>
+        {[<ButtonWithOptions.Option key={1}>{value}</ButtonWithOptions.Option>]}
+      </StatsWidget.Filter>
+    );
     createComponent({title, statistics, children});
-    expect(driver.getFilterDriver('stats-widget-filter').dropdownLayoutDriver.optionsContent()).toContain(value);
+    expect(
+      driver
+        .getFilterDriver('stats-widget-filter')
+        .dropdownLayoutDriver.optionsContent()
+    ).toContain(value);
   });
 
   it('should not initialize component with 1 bad child', () => {
-    const PageRequiredChildrenArrayError = 'Warning: Failed prop type: Invalid prop `children` of type `object` supplied to `StatsWidget`, expected an array.\n    in StatsWidget';
+    const PageRequiredChildrenArrayError =
+      'Warning: Failed prop type: Invalid prop `children` of type `object` supplied to `StatsWidget`, expected an array.\n    in StatsWidget';
     createComponent({title, statistics, children: <div/>});
 
     expect(stub).toHaveBeenCalledWith(PageRequiredChildrenArrayError);
   });
 
   it('should not initialize component with percent which are not a numbers', () => {
+    const wrongStatistics = [
+      {
+        title: '10$',
+        subtitle: 'Revenue',
+        percent: '15%'
+      },
+      {
+        title: '2',
+        subtitle: 'Products',
+        percent: '-15%'
+      },
+      {
+        title: '1',
+        subtitle: 'Transactions',
+        percent: '0'
+      }
+    ];
 
-    const wrongStatistics = [{
-      title: '10$',
-      subtitle: 'Revenue',
-      percent: '15%'
-    },
-    {
-      title: '2',
-      subtitle: 'Products',
-      percent: '-15%'
-    },
-    {
-      title: '1',
-      subtitle: 'Transactions',
-      percent: '0'
-    }];
-
-    const PageRequiredChildrenArrayError = 'Warning: Failed prop type: Invalid prop `statistics[0].percent` of type `string` supplied to `StatsWidget`, expected `number`.\n    in StatsWidget';
+    const PageRequiredChildrenArrayError =
+      'Warning: Failed prop type: Invalid prop `statistics[0].percent` of type `string` supplied to `StatsWidget`, expected `number`.\n    in StatsWidget';
     createComponent({title, statistics: wrongStatistics});
 
     expect(stub).toHaveBeenCalledWith(PageRequiredChildrenArrayError);
-  });
-
-  describe('testkit', () => {
-    it('should exist', () => {
-      expect(isTestkitExists(<StatsWidget title="test title" statistics={statistics}/>, statsWidgetTestkitFactory)).toBeTruthy();
-    });
-  });
-
-  describe('enzyme testkit', () => {
-    it('should exist', () => {
-      expect(isEnzymeTestkitExists(<StatsWidget title="test title" statistics={statistics}/>, enzymeStatsWidgetTestkitFactory, mount)).toBeTruthy();
-    });
   });
 });
