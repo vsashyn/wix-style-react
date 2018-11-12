@@ -23,11 +23,10 @@ const FAILING_COMPONENTS = [
   'BadgeSelectItemBuilder',
   'ButtonLayout',
   'ButtonWithOptions',
-  'Calendar',
   'CalendarPanel',
   'Card',
   'CloseButton',
-  'ColorPicker',
+  'ColorPicker', // missing testkit for enzyme
   'Composite',
   'DataTable',
   'DatePicker',
@@ -39,8 +38,8 @@ const FAILING_COMPONENTS = [
   'FullTextView',
   'GoogleAddressInput',
   'GoogleAddressInputWithLabel',
-  'Grid',
-  'HBox',
+  'Grid', // Component has no testkit
+  'HBox', // Component has no testkit
   'IconWithOptions',
   'Layout',
   'MessageBox',
@@ -66,7 +65,7 @@ const FAILING_COMPONENTS = [
   'TextArea',
   'TextField',
   'Tooltip',
-  'VBox'
+  'VBox' // Component has no testkit
 ];
 
 /**
@@ -92,6 +91,9 @@ const REQUIRED_PROPS = {
   },
   Breadcrumbs: {
     items: [{id: 0, value: 'Option 1'}, {id: 1, value: 'Option 2'}]
+  },
+  Calendar: {
+    onChange: () => {}
   }
 };
 
