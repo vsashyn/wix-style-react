@@ -141,3 +141,4 @@ import '../../stories/Page/PageTestStories.js'; // Tests/2.5 + Page/
 import '../../stories/PageHeader/PageHeaderTestStories.js'; // Tests/2.5 + PageHeader/
 import '../../stories/Tooltip/Composite/PopoverMenuRegressionTest.js'; // Tests/7.3. Popover Menu/
 import '../../stories/Button/ButtonTestStory';
+import '../../stories/Calendar/CalendarTestStory';
