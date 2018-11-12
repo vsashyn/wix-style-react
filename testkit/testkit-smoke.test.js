@@ -57,7 +57,6 @@ const FAILING_COMPONENTS = [
   'RichTextAreaComposite',
   'Selector',
   'SideMenuDrill',
-  'Slider',
   'StatsWidget',
   'Table',
   'TableToolbar',
@@ -93,6 +92,10 @@ const REQUIRED_PROPS = {
     items: [{id: 0, value: 'Option 1'}, {id: 1, value: 'Option 2'}]
   },
   Calendar: {
+    onChange: () => {}
+  },
+
+  Slider: {
     onChange: () => {}
   }
 };

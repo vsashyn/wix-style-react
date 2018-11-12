@@ -2,13 +2,8 @@ import React from 'react';
 import Slider from './Slider';
 import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
 import sliderDriverFactory from './Slider.driver';
-import {sliderTestkitFactory} from '../../testkit';
-import {sliderTestkitFactory as enzymeSliderTestkitFactory} from '../../testkit/enzyme';
-import {isTestkitExists, isEnzymeTestkitExists} from '../../test/utils/testkit-sanity';
-import {mount} from 'enzyme';
 
 describe('Slider', () => {
-
   const createDriver = createDriverFactory(sliderDriverFactory);
   let driver;
 
@@ -64,17 +59,5 @@ describe('Slider', () => {
     expect(driver.getToolTipValue()).toBeFalsy();
 
     driver.unHoverHandle({handleIndex: 0});
-  });
-});
-
-describe('testkit', () => {
-  it('should exist', () => {
-    expect(isTestkitExists(<Slider onChange={() => {}}/>, sliderTestkitFactory)).toBe(true);
-  });
-});
-
-describe('enzyme testkit', () => {
-  it('should exist', () => {
-    expect(isEnzymeTestkitExists(<Slider onChange={() => {}}/>, enzymeSliderTestkitFactory, mount)).toBe(true);
   });
 });
