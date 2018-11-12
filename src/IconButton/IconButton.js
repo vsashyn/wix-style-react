@@ -10,7 +10,7 @@ class IconButton extends WixComponent {
   static displayName = 'IconButton';
 
   static propTypes = {
-    skin: oneOf(['standard', 'light', 'standardOnGrey']),
+    skin: oneOf(['standard', 'inverted', 'light']),
     priority: oneOf(['primary', 'secondary']),
     size: oneOf(['small', 'medium']),
     className: string,
