@@ -1,6 +1,9 @@
+import React from 'react';
 import TextButton from 'wix-style-react/TextButton';
 import {storySettings} from './storySettings';
 import icons from './icons-for-story';
+
+import TextButtonStory from './examples';
 
 export default {
   category: storySettings.kind,
@@ -20,5 +23,7 @@ export default {
     onClick: () => 'Clicked!',
     prefixIcon: icons,
     suffixIcon: icons
-  }
+  },
+
+  examples: <TextButtonStory/>
 };
