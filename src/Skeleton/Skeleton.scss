@@ -161,6 +161,10 @@ $skeletonCornerWidth: 6px;
   }
 }
 
+@mixin rightToLeft {
+
+}
+
 :global(.rtl) {
   .animatedBackground {
     animation-name: placeHolderShimmer;

@@ -9,11 +9,11 @@ class PlaceholderLine extends React.PureComponent {
     size: PropTypes.oneOf(['small', 'medium', 'large']),
     isFirst: PropTypes.bool.isRequired,
     spacing: PropTypes.oneOf(['small', 'medium', 'large']),
-    alignment: PropTypes.oneOf(['start', 'middle', 'end'])
+    alignment: PropTypes.oneOf(['start', 'middle'])
   }
 
   renderConcealer() {
-    return <div className={classnames(styles.concealer, styles[this.props.size])}/>;
+    return <div data-hook="placeholder-concealer" className={classnames(styles.concealer, styles[this.props.size])}/>;
   }
 
   renderCorner(rightCorner = false) {
@@ -35,6 +35,7 @@ class PlaceholderLine extends React.PureComponent {
     const {size, spacing, isFirst, alignment} = this.props;
     return (
       <div
+        data-hook={'placeholder-line'}
         className={
           classnames(
             styles.inner,
@@ -51,7 +52,7 @@ class PlaceholderLine extends React.PureComponent {
             {alignment === 'middle' && this.renderConcealer()}
             {this.renderCorner()}
             {this.renderCorner(true)}
-            <div className={classnames(styles.chunk, styles[size])}/>
+            <div data-hook="placeholder-chunk" className={classnames(styles.chunk, styles[size])}/>
             {this.renderConcealer()}
           </div>
         </div>
@@ -67,7 +68,7 @@ export default class Skeleton extends WixComponent {
         type: PropTypes.oneOf(['line']),
         size: PropTypes.oneOf(['small', 'medium', 'large'])
       })).isRequired,
-    alignment: PropTypes.oneOf(['start', 'middle', 'end']),
+    alignment: PropTypes.oneOf(['start', 'middle']),
     spacing: PropTypes.oneOf(['small', 'medium', 'large'])
   }
 
@@ -77,9 +78,9 @@ export default class Skeleton extends WixComponent {
   }
 
   render() {
-    const {content, alignment, spacing} = this.props;
+    const {content, alignment, spacing, dataHook} = this.props;
     return (
-      <div>
+      <div data-hook={dataHook}>
         {
           content.map((item, key) => (
             <PlaceholderLine

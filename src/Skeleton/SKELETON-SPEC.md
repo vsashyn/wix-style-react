@@ -18,5 +18,5 @@ A React component which has the following props:
   * type (string) - “line” (only option for now).
   * width (string) - One of “small”, “medium”, “large”.
 
-* alignment (string) - One of “start” (default), “middle”, “end”.
+* alignment (string) - One of “start” (default), “middle”.
 * spacing (string) - One of “small”, “medium” (default), “large”.
