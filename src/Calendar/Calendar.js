@@ -61,7 +61,7 @@ export default class Calendar extends WixComponent {
       selectedDays
     } = props;
 
-    let {from, to} = selectedDays || {};
+    const {from, to} = selectedDays || {};
     return from || to || selectedDays || value;
   }
 

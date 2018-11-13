@@ -29,6 +29,4 @@ storiesOf(getTestStoryKind({category: Category.INPUTS, storyName: '3.13 Calendar
       </div>
     );
   }
-
 );
-
