@@ -82,10 +82,11 @@ export default () =>
 <details>
   <summary>`<Col/>`</summary>
 
-  Use for any content, works great with [`<Card/>`](https://wix-wix-style-react.surge.sh/?selectedKind=Common&selectedStory=Card&full=0&addons=0&stories=1&panelRight=0) as children.
+  Use for any content
 
   | propName               | propType | defaultValue | isRequired | description                                    |
   | ---                    | ---      | ---          | ---        | ---                                            |
+  | span                   | number   | -            | +          | The columns span of this column                |
   | rtl                    | bool     | -            | -          | Reverses the columns ordering                  |
   | stretchViewsVertically | bool     | -            | -          | Make all the views in that raw the same height |
 </details>
@@ -101,16 +102,3 @@ export default () =>
 
   > Note that the span of each element will be `12 % {children.length}`, so in case of result greater than 0, you'll get incomplete line
 </details>
-
-
-<details>
-  <summary>`<Col/>`</summary>
-
-  A simple column according to the bootstrap docs
-
-  | propName | propType | defaultValue | isRequired | description                       |
-  | ---      | ---      | ---          | ---        | ---                               |
-  | span     | number   | -            | +          | The columns span of this column   |
-  | rtl      | bool     | -            | -          | Causing the column to float right |
-</details>
-

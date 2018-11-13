@@ -53,7 +53,6 @@ $base-transition: all 100ms linear;
 
   /* HEIGHT */
   @include TextSizeAndFontFamily($size: medium, $weight: normal);
-
 }
 
 .heightx-large {
@@ -69,7 +68,7 @@ $base-transition: all 100ms linear;
   line-height: 18px; /* tiny text has line-height:15 which is a problem centering */
 }
 
-.button>.inner {
+.button > .inner {
   display: flex;
   width: 100%;
   height: 100%;
@@ -77,9 +76,9 @@ $base-transition: all 100ms linear;
   align-items: center;
 }
 
-.button>.inner,
-.button>div,
-.button>.inner>div {
+.button > .inner,
+.button > div,
+.button > .inner > div {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -348,12 +347,14 @@ $base-transition: all 100ms linear;
   border-color: $B20;
 }
 
-.login:hover, .login.hover {
+.login:hover,
+.login.hover {
   background-color: $B20;
   border-color: $B20;
 }
 
-.emptylogin:hover, .emptylogin.hover {
+.emptylogin:hover,
+.emptylogin.hover {
   background-color: #5babef;
   color: #fff;
 }
@@ -548,7 +549,7 @@ $base-transition: all 100ms linear;
   @include Text($size: medium, $weight: normal, $secondary: true, $light: true);
 
   &.heightsmall,
-  &.heightx-small  {
+  &.heightx-small {
     @include TextColor($secondary: true, $light: true);
   }
 
@@ -571,12 +572,13 @@ $base-transition: all 100ms linear;
 
   color: $D10;
 
-  &:hover, &.hover {
+  &:hover,
+  &.hover {
     color: $B10;
   }
 
   &.heightsmall,
-  &.heightx-small  {
+  &.heightx-small {
     @include TextColor($secondary: true);
   }
 }
@@ -589,7 +591,6 @@ $base-transition: all 100ms linear;
   &:hover {
     color: $B10;
   }
-
 }
 
 .outlined {
@@ -614,4 +615,89 @@ $base-transition: all 100ms linear;
     background: $D55;
     border-color: $D55;
   }
+}
+
+/** Affixes **/
+
+.button .inner .affixIcon {
+  line-height: 0;
+}
+
+.suffix {
+  margin: 0 -12px 0 6px;
+  width: 24px;
+  height: 24px;
+}
+
+.prefix {
+  margin: 0 6px 0 -12px;
+  line-height: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.heightx-small .suffix {
+  margin: 0 -6px 0 0;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.heightx-small .prefix {
+  margin: 0 0 0 -6px;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.heightsmall .suffix {
+  margin: 0 -6px 0 6px;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.heightsmall .prefix {
+  margin: 0 6px 0 -6px;
+  line-height: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.heightlarge .suffix {
+  margin: 0 -12px 0 12px;
+  line-height: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.heightlarge .prefix {
+  margin: 0 12px 0 -12px;
+  line-height: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.heightx-large .suffix {
+  margin: 0 -12px 0 12px;
+  line-height: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.heightx-large .prefix {
+  margin: 0 12px 0 -12px;
+  line-height: 0;
+  width: 24px;
+  height: 24px;
+}
+
+:global(.rtl) .prefix {
+  padding: 0 0 0 10px;
+  line-height: 0 !important;
+}
+
+:global(.rtl) .suffix {
+  padding: 0 10px 0 0;
+  line-height: 0 !important;
 }

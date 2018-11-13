@@ -51,6 +51,10 @@ export default class BadgeSelect extends React.Component {
     }
   }
 
+  _isControlled() {
+    return typeof this.props.selectedId !== 'undefined';
+  }
+
   /**
    * Determine if a certain key should open the DropdownLayout
    *
@@ -61,12 +65,12 @@ export default class BadgeSelect extends React.Component {
     return ['Enter', 'Spacebar', ' ', 'ArrowDown'].includes(key);
   }
 
-  getSelectedOption(props) {
-    if (props.options && props.options.length) {
-      return props.options.find(({id}) => id === props.selectedId) || props.options[0];
-    }
+  _getBadgeOptionById(options, wantedId) {
+    return options.find(({id}) => id === wantedId);
+  }
 
-    return null;
+  getSelectedOption(props) {
+    return this._getBadgeOptionById(props.options, props.selectedId) || props.options[0];
   }
 
   get options() {
@@ -94,9 +98,13 @@ export default class BadgeSelect extends React.Component {
   }
 
   handleSelect({id: selectedId}) {
-    const {onSelect} = this.props;
-    const selectedBadge = this.props.options.find(({id}) => id === selectedId);
-    this.setState({selectedBadge, visible: false});
+    const {onSelect, options} = this.props;
+    const selectedBadge = this._getBadgeOptionById(options, selectedId);
+    const newState = {visible: false};
+    if (!this._isControlled()) {
+      newState.selectedBadge = selectedBadge;
+    }
+    this.setState(newState);
 
     onSelect && onSelect(selectedBadge);
   }
@@ -118,8 +126,7 @@ export default class BadgeSelect extends React.Component {
 
   render() {
     const {type, size, uppercase, dataHook} = this.props;
-
-    return this.state.selectedBadge ? (
+    return (
       <div className={styles.container} data-hook={dataHook}>
         <div data-hook="badgeSelect-badge-wrapper" onKeyDown={this.onKeyDown}>
           <Badge
@@ -146,6 +153,6 @@ export default class BadgeSelect extends React.Component {
             />
         </div>
       </div>
-    ) : null;
+    );
   }
 }

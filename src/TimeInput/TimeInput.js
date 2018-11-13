@@ -10,7 +10,7 @@ import styles from './TimeInput.scss';
 /**
   * An uncontrolled time input component with a stepper and am/pm support
   */
-export default class extends Component {
+export default class TimePicker extends Component {
   static displayName = 'TimePicker'
 
   static propTypes = {

@@ -11,14 +11,18 @@ const CollapsedHeaderDriverFactory = ({element, wrapper, component}) => {
     subtitle: () => subtitle && subtitle.innerHTML,
     element: () => element,
     click: () => ReactTestUtils.Simulate.click(title),
-    findByDatahook: dataHook => element.querySelector(`[data-hook="${dataHook}"]`),
+    findByDatahook: dataHook =>
+      element.querySelector(`[data-hook="${dataHook}"]`),
     setProps: props => {
       const ClonedWithProps = React.cloneElement(
         component,
         Object.assign({}, component.props, props),
         ...(component.props.children || [])
       );
-      ReactDOM.render(<div ref={r => (element = r)}>{ClonedWithProps}</div>, wrapper);
+      ReactDOM.render(
+        <div ref={r => (element = r)}>{ClonedWithProps}</div>,
+        wrapper
+      );
     }
   };
 };

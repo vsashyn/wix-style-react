@@ -16,6 +16,7 @@
 | exists| - | bool | fulfilled if element in the DOM |
 | isStatisticsContentExists| - | bool | fulfilled if element in the DOM |
 | isEmptyStateExists| - | bool | fulfilled if element in the DOM |
+| isNegativePercentValue | index | bool | Check if percent negative value skin equals to `danger` |
 
 ## StatsWidget Protractor TestKit API
 

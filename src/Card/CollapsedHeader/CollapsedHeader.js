@@ -2,6 +2,7 @@ import React from 'react';
 import {bool, node, oneOf, func, string} from 'prop-types';
 import Collapse from 'react-collapse';
 
+import deprecationLog from '../../utils/deprecationLog';
 import ToggleSwitch from '../../../src/ToggleSwitch';
 import WixComponent from '../../../src/BaseComponents/WixComponent';
 import Header from '../Header';
@@ -38,6 +39,12 @@ class CollapsedHeader extends WixComponent {
     };
   }
 
+  componentDidMount() {
+    deprecationLog(
+      'Card.CollapsedHeader is deprecated. Instead please use <Card><Collapse><Card.Content/></Collapse></Card>'
+    );
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
       this.props.collapsed !== nextProps.collapsed &&
@@ -62,20 +69,24 @@ class CollapsedHeader extends WixComponent {
     if (controlled) {
       this.onCollapsedChange();
     } else {
-      this.setState(({isCollapsed}) => ({isCollapsed: !isCollapsed}), this.onCollapsedChange);
+      this.setState(
+        ({isCollapsed}) => ({isCollapsed: !isCollapsed}),
+        this.onCollapsedChange
+      );
     }
   };
 
-  _toggleSwitchElement = () =>
+  _toggleSwitchElement = () => (
     <div onClick={this.stopPropagation}>
       <ToggleSwitch
         dataHook="switch"
         onChange={this.onToggleChange}
         checked={!this.state.isCollapsed}
         />
-    </div>;
+    </div>
+  );
 
-  _buttonElement = () =>
+  _buttonElement = () => (
     <div onClick={this.stopPropagation}>
       <Button
         withNewIcons
@@ -86,18 +97,15 @@ class CollapsedHeader extends WixComponent {
         theme="whiteblueprimary"
         type="button"
         >
-        {this.state.isCollapsed ? this.props.buttonExpandText : this.props.buttonCollapseText}
+        {this.state.isCollapsed ?
+          this.props.buttonExpandText :
+          this.props.buttonCollapseText}
       </Button>
-    </div>;
+    </div>
+  );
 
   render() {
-    const {
-      title,
-      subtitle,
-      children,
-      withoutDivider,
-      toggleStyle
-    } = this.props;
+    const {title, subtitle, children, withoutDivider, toggleStyle} = this.props;
 
     const {isCollapsed} = this.state;
 
@@ -107,15 +115,16 @@ class CollapsedHeader extends WixComponent {
           <Header
             title={title}
             subtitle={subtitle}
-            suffix={toggleStyle === 'switch' ? this._toggleSwitchElement() : this._buttonElement()}
+            suffix={
+              toggleStyle === 'switch' ?
+                this._toggleSwitchElement() :
+                this._buttonElement()
+            }
             withoutDivider={withoutDivider || isCollapsed}
             />
         </div>
 
-        <Collapse
-          isOpened={!isCollapsed}
-          children={children}
-          />
+        <Collapse isOpened={!isCollapsed} children={children}/>
       </div>
     );
   }

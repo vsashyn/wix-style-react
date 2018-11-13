@@ -16,7 +16,6 @@ describe('Backoffice Button', () => {
 
   // Specific as opposed to 'Generic' tests like the Focusable tests.
   describe(NO_DESCRIPTION, () => {
-
     beforeEach(async () => {
       // TODO: We do browser.get() before EACH test in order to reset the focus.
       // implmement a generic solution in AutoExampleDriver that will do
@@ -27,11 +26,13 @@ describe('Backoffice Button', () => {
     });
 
     afterEach(() => autoExampleDriver.reset());
-
-    eyes.it('should be in initial state when renders with default', async () => {
-      expect(await driver.isButtonDisabled()).toBe(false, 'isButtonDisabled');
-      expect(await driver.isFocused()).toBe(false, 'isFocused');
-    });
+    eyes.it(
+      'should be in initial state when renders with default',
+      async () => {
+        expect(await driver.isButtonDisabled()).toBe(false, 'isButtonDisabled');
+        expect(await driver.isFocused()).toBe(false, 'isFocused');
+      }
+    );
 
     eyes.it('should alert on click', async () => {
       await autoExampleDriver.setProps({
@@ -46,7 +47,6 @@ describe('Backoffice Button', () => {
       await alertDialog.dismiss();
     });
 
-
     eyes.it('should render disabled', async () => {
       await autoExampleDriver.setProps({disabled: true});
       expect(await driver.isButtonDisabled()).toBe(true);
@@ -57,7 +57,6 @@ describe('Backoffice Button', () => {
         prefixIcon: <div>prefix</div>,
         suffixIcon: <div>suffix</div>
       });
-
       expect(await driver.isPrefixIconExists()).toBe(true);
       expect(await driver.isSuffixIconExists()).toBe(true);
     });
@@ -68,17 +67,22 @@ describe('Backoffice Button', () => {
         expect(await driver.isFocused()).toBe(true);
       });
     });
-
   });
 
   describe('render variations', () => {
     ['x-small', 'small', 'medium', 'large', 'x-large'].forEach(height => {
       [false, true].forEach(hover => {
         const props = {height, hover};
-        eyes.it(`should display all themes with props=${JSON.stringify(props)}`, async () => {
-          const storyUrl = getStoryUrl(`${TESTS_PREFIX}/5. Buttons`, '5.0 ButtonLayout');
-          await browser.get(`${storyUrl}&${queryString.stringify(props)}`);
-        });
+        eyes.it(
+          `should display all themes with props=${JSON.stringify(props)}`,
+          async () => {
+            const storyUrl = getStoryUrl(
+              `${TESTS_PREFIX}/5. Buttons`,
+              '5.0 ButtonLayout'
+            );
+            await browser.get(`${storyUrl}&${queryString.stringify(props)}`);
+          }
+        );
       });
     });
   });

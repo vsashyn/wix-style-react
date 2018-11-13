@@ -9,7 +9,7 @@ import SortByArrowDown from '../new-icons/system/SortByArrowDown';
 import ButtonWithOptions from '../ButtonWithOptions';
 import Badge from '../Badge';
 
-function renderTrend(percent) {
+function renderTrend(percent, invertPercentColor) {
   const badgeProps = {
     icon: null,
     skin: null,
@@ -20,10 +20,10 @@ function renderTrend(percent) {
   //TODO - the data-class is just a hack in order not to break the testkit function that exposes it
   if (percent > 0) {
     badgeProps.prefixIcon = <SortByArrowUp data-hook="percent-icon" data-class="isPositive"/>;
-    badgeProps.skin = 'success';
+    badgeProps.skin = invertPercentColor ? 'danger' : 'success';
   } else if (percent < 0) {
     badgeProps.prefixIcon = <SortByArrowDown data-hook="percent-icon" data-class="isNegative"/>;
-    badgeProps.skin = 'danger';
+    badgeProps.skin = invertPercentColor ? 'success' : 'danger';
   } else {
     badgeProps.prefixIcon = null;
     badgeProps.skin = 'neutral';
@@ -42,11 +42,14 @@ class StatsWidget extends WixComponent {
   static propTypes = {
     /** Widget title */
     title: PropTypes.string.isRequired,
-    /** Statistics to display */
+    /** Statistics to display:
+     *
+     * `invertPercentColor`: Change color of `percent` prop marking negative percent as `success` and positive as `danger` */
     statistics: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-      percent: PropTypes.number
+      percent: PropTypes.number,
+      invertPercentColor: PropTypes.bool
     })),
     /** Filters for statistics (will be shown in right top corner) Accepts array of  <StatsWidget.Filter> which accepts all dropdown properties*/
     children: PropTypes.arrayOf((propValue, key) => {
@@ -67,7 +70,7 @@ class StatsWidget extends WixComponent {
       <Heading dataHook="statistics-item-subtitle" appearance="H5">
         {statistics.subtitle}
       </Heading>
-      {typeof (statistics.percent) === 'number' && renderTrend(statistics.percent)}
+      {typeof (statistics.percent) === 'number' && renderTrend(statistics.percent, statistics.invertPercentColor)}
     </div>);
   }
 

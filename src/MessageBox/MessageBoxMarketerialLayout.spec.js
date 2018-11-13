@@ -3,7 +3,10 @@ import MessageBoxMarketerialLayout from './MessageBoxMarketerialLayout';
 import MessageBoxMarketerialLayoutFactory from './MessageBoxMarketerialLayout.driver';
 import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
 import sinon from 'sinon';
-import {isTestkitExists, isEnzymeTestkitExists} from '../../test/utils/testkit-sanity';
+import {
+  isTestkitExists,
+  isEnzymeTestkitExists
+} from '../../test/utils/testkit-sanity';
 import {messageBoxMarketerialLayoutTestkitFactory} from '../../testkit';
 import {messageBoxMarketerialLayoutTestkitFactory as enzymeMessageBoxTestkitFactory} from '../../testkit/enzyme';
 import {mount} from 'enzyme';
@@ -21,7 +24,9 @@ describe('MessageBoxMarketerialLayout', () => {
       const props = Object.assign({}, requiredProps, {
         primaryButtonLabel: 'primaryButtonLabel'
       });
-      const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
+      const driver = createDriver(
+        <MessageBoxMarketerialLayout {...props} fixImagePosition/>
+      );
       expect(driver.getPrimaryButtonText()).toBe(props.primaryButtonLabel);
     });
 
@@ -35,8 +40,7 @@ describe('MessageBoxMarketerialLayout', () => {
     });
 
     it('should not display the primary button if primary button label was not passed', () => {
-      const props = Object.assign({}, requiredProps, {
-      });
+      const props = Object.assign({}, requiredProps, {});
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
       expect(driver.getPrimaryButton()).toBeNull();
     });
@@ -50,8 +54,7 @@ describe('MessageBoxMarketerialLayout', () => {
     });
 
     it('should not display the secondary button if secondary button label was not passed', () => {
-      const props = Object.assign({}, requiredProps, {
-      });
+      const props = Object.assign({}, requiredProps, {});
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
       expect(driver.getSecondaryButton()).toBeNull();
     });
@@ -100,12 +103,15 @@ describe('MessageBoxMarketerialLayout', () => {
         content: <div data-hook="inner-div"/>
       });
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
-      expect(driver.getContentBySelector('[data-hook="inner-div"]')).not.toBeNull();
+      expect(
+        driver.getContentBySelector('[data-hook="inner-div"]')
+      ).not.toBeNull();
     });
 
     it(`should render image from given imageUrl`, () => {
       const props = Object.assign({}, requiredProps, {
-        imageUrl: 'http://www.domstechblog.com/wp-content/uploads/2015/09/wix.png'
+        imageUrl:
+          'http://www.domstechblog.com/wp-content/uploads/2015/09/wix.png'
       });
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
       expect(driver.getImageSrc()).toBe(props.imageUrl);
@@ -116,7 +122,9 @@ describe('MessageBoxMarketerialLayout', () => {
         imageComponent: <div data-hook="image-component-test"/>
       });
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
-      expect(driver.getContentBySelector('[data-hook="image-component-test"]')).not.toBeNull();
+      expect(
+        driver.getContentBySelector('[data-hook="image-component-test"]')
+      ).not.toBeNull();
     });
 
     it(`should use default color theme (blue) if none was passed`, () => {
@@ -140,18 +148,24 @@ describe('MessageBoxMarketerialLayout', () => {
   describe('footer children', () => {
     it(`should render the passed footer content`, () => {
       const props = Object.assign({}, requiredProps, {
-        footerBottomChildren: (<div data-hook="inner-div"/>)
+        footerBottomChildren: <div data-hook="inner-div"/>
       });
 
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
 
-      expect(driver.getContentBySelector('[data-hook="inner-div"]')).not.toBeNull();
-      expect(driver.getContentBySelector('[data-hook="footer-layout-bottom-children"]')).not.toBeNull();
+      expect(
+        driver.getContentBySelector('[data-hook="inner-div"]')
+      ).not.toBeNull();
+      expect(
+        driver.getContentBySelector(
+          '[data-hook="footer-layout-bottom-children"]'
+        )
+      ).not.toBeNull();
     });
 
     it(`should not render secondary button when footer content passed`, () => {
       const props = Object.assign({}, requiredProps, {
-        footerBottomChildren: (<div data-hook="inner-div"/>)
+        footerBottomChildren: <div data-hook="inner-div"/>
       });
 
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
@@ -160,24 +174,38 @@ describe('MessageBoxMarketerialLayout', () => {
     });
 
     it(`should not render footer's wrapper div when footer content isn't passed`, () => {
-      const props = Object.assign({}, requiredProps, {
-      });
+      const props = Object.assign({}, requiredProps, {});
 
       const driver = createDriver(<MessageBoxMarketerialLayout {...props}/>);
 
-      expect(driver.getContentBySelector('[data-hook="footer-layout-bottom-children"]')).toBeNull();
+      expect(
+        driver.getContentBySelector(
+          '[data-hook="footer-layout-bottom-children"]'
+        )
+      ).toBeNull();
     });
   });
 
   describe('testkit', () => {
     it('should exist', () => {
-      expect(isTestkitExists(<MessageBoxMarketerialLayout {...requiredProps}/>, messageBoxMarketerialLayoutTestkitFactory)).toBe(true);
+      expect(
+        isTestkitExists(
+          <MessageBoxMarketerialLayout {...requiredProps}/>,
+          messageBoxMarketerialLayoutTestkitFactory
+        )
+      ).toBe(true);
     });
   });
 
   describe('enzyme testkit', () => {
     it('should exist', () => {
-      expect(isEnzymeTestkitExists(<MessageBoxMarketerialLayout {...requiredProps}/>, enzymeMessageBoxTestkitFactory, mount)).toBe(true);
+      expect(
+        isEnzymeTestkitExists(
+          <MessageBoxMarketerialLayout {...requiredProps}/>,
+          enzymeMessageBoxTestkitFactory,
+          mount
+        )
+      ).toBe(true);
     });
   });
 });

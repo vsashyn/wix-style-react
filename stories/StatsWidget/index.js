@@ -14,6 +14,9 @@ import ExampleStatsWidgetStandardRaw from '!raw-loader!./ExampleStatsWidgetStand
 import ExampleStatsWidgetWithPercents from './ExampleStatsWidgetWithPercents';
 import ExampleStatsWidgetWithPercentsRaw from '!raw-loader!./ExampleStatsWidgetWithPercents';
 
+import ExampleStatsWidgetWithInvertPercentColor from './ExampleStatsWidgetWithInvertPercentColor';
+import ExampleStatsWidgetWithInvertPercentColorRaw from '!raw-loader!./ExampleStatsWidgetWithInvertPercentColor';
+
 import ExampleStatsWidgetWithFilters from './ExampleStatsWidgetWithFilters';
 import ExampleStatsWidgetWithFiltersRaw from '!raw-loader!./ExampleStatsWidgetWithFilters';
 
@@ -40,6 +43,9 @@ storiesOf('2. Layout', module)
         </CodeExample>
         <CodeExample title="Stats widget example with percents" code={ExampleStatsWidgetWithPercentsRaw}>
           <ExampleStatsWidgetWithPercents/>
+        </CodeExample>
+        <CodeExample title="Stats widget example with invert percent color" code={ExampleStatsWidgetWithInvertPercentColorRaw}>
+          <ExampleStatsWidgetWithInvertPercentColor/>
         </CodeExample>
         <CodeExample title="Stats widget example with filter" code={ExampleStatsWidgetWithFilterWithNoBorderRaw}>
           <ExampleStatsWidgetWithFilterWithNoBorder/>

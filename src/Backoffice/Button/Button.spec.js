@@ -91,7 +91,13 @@ describe('testkit', () => {
     const div = document.createElement('div');
     const dataHook = 'myDataHook';
     const onClick = jest.fn();
-    const wrapper = div.appendChild(ReactTestUtils.renderIntoDocument(<div><Button onClick={onClick} dataHook={dataHook}/></div>));
+    const wrapper = div.appendChild(
+      ReactTestUtils.renderIntoDocument(
+        <div>
+          <Button onClick={onClick} dataHook={dataHook}/>
+        </div>
+      )
+    );
     const buttonTestkit = buttonTestkitFactory({wrapper, dataHook});
     expect(buttonTestkit.exists()).toBeTruthy();
   });

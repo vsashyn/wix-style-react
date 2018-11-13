@@ -3,9 +3,13 @@ import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
 import badgeSelectPrivateDriverFactory from './BadgeSelect.driver.private';
 import BadgeSelect from './BadgeSelect';
 import {SKIN, SIZE, TYPE} from 'wix-ui-backoffice/dist/src/components/Badge/constants';
+import {mount} from 'enzyme';
+import {enzymeTestkitFactoryCreator} from 'wix-ui-test-utils/enzyme';
+
 
 describe('BadgeSelect', () => {
   const createDriver = createDriverFactory(badgeSelectPrivateDriverFactory);
+  const badgeSelectEnzymeDriver = enzymeTestkitFactoryCreator(badgeSelectPrivateDriverFactory);
   const initialOptionId = 0;
   const options = Object.values(SKIN).map((skin, id) => ({
     id: id.toString(),
@@ -14,13 +18,15 @@ describe('BadgeSelect', () => {
   }));
 
   function createComponent(props = {}) {
+
+    const combinedProps = {
+      options,
+      selectedId: initialOptionId.toString(),
+      ...props
+    };
+
     return createDriver(
-      <BadgeSelect
-        options={options}
-        selectedId={initialOptionId.toString()}
-        onSelect={() => {}}
-        {...props}
-        />
+      <BadgeSelect {...combinedProps}/>
     );
   }
 
@@ -86,21 +92,53 @@ describe('BadgeSelect', () => {
     expect(onSelect).toBeCalledWith(options[selectedIndex]);
   });
 
-  it('should change badge skin after an option is selected', () => {
-    const {driver, badgeDriver} = createComponent();
-    const selectedIndex = 3;
+  describe('uncontrolled mode', () => {
+    it('should pick the first option if no selectedId given', () => {
+      const uncontrolledProps = {selectedId: undefined};
+      const {badgeDriver} = createComponent(uncontrolledProps);
 
-    driver.click();
-    driver.clickAtOption(selectedIndex);
-    expect(badgeDriver.getSkin()).toBe(options[selectedIndex].skin);
+      expect(badgeDriver.getSkin()).toBe(options[0].skin);
+      expect(badgeDriver.text()).toBe(options[0].text);
+    });
+
+    it('should change badge after an option is selected', () => {
+      const uncontrolledProps = {selectedId: undefined};
+      const {driver, badgeDriver} = createComponent(uncontrolledProps);
+      const selectedIndex = 3;
+
+      driver.click();
+      driver.clickAtOption(selectedIndex);
+      expect(badgeDriver.getSkin()).toBe(options[selectedIndex].skin);
+      expect(badgeDriver.text()).toBe(options[selectedIndex].text);
+    });
   });
 
-  it('should change badge text after an option is selected', () => {
-    const {driver, badgeDriver} = createComponent();
-    const selectedIndex = 3;
+  describe('controlled mode', () => {
+    it('should not change badge after an option is selected', () => {
+      const {driver, badgeDriver} = createComponent();
+      const selectedIndex = 3;
 
-    driver.click();
-    driver.clickAtOption(selectedIndex);
-    expect(badgeDriver.text()).toBe(options[selectedIndex].text);
+      driver.click();
+      driver.clickAtOption(selectedIndex);
+      expect(badgeDriver.getSkin()).toBe(options[0].skin);
+      expect(badgeDriver.text()).toBe(options[0].text);
+    });
+
+    it('should change badge only on selectedIndex change', () => {
+      const dataHook = 'badge-select';
+      const wrapper = mount(<BadgeSelect selectedId={'0'} dataHook={dataHook} options={options}/>);
+
+      const {driver, badgeDriver} = badgeSelectEnzymeDriver({wrapper, dataHook});
+      const selectedIndex = 3;
+
+      driver.click();
+      driver.clickAtOption(selectedIndex);
+
+      wrapper.setProps({selectedId: `${selectedIndex}`});
+
+      expect(badgeDriver.getSkin()).toBe(options[selectedIndex].skin);
+      expect(badgeDriver.text()).toBe(options[selectedIndex].text);
+
+    });
   });
 });
