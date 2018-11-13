@@ -21,7 +21,7 @@ const options = [
 class ControlledExample extends Component {
   constructor() {
     super();
-    this.state = {selectedId: 3, show: true};
+    this.state = {selectedId: 1, show: true};
   }
 
   render() {

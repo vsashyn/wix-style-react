@@ -25,9 +25,6 @@ import ExampleControlledRawWithButtons from '!raw-loader!./ExampleControlledWith
 import ExampleControlledInContainer from './ExampleControlledInContainer';
 import ExampleControlledInContainerRaw from '!raw-loader!./ExampleControlledInContainer';
 
-import ExampleTheme from './ExampleTheme';
-import ExampleThemeRaw from '!raw-loader!./ExampleTheme';
-
 storiesOf('11. Pickers and Selectors', module)
   .add('11.1 DropdownLayout', () => (
     <TabbedView tabs={['API', 'Testkit']}>
@@ -53,12 +50,6 @@ storiesOf('11. Pickers and Selectors', module)
         </CodeExample>
 
         <div style={{paddingTop: '143px'}}/>
-
-        <CodeExample title="With theme" code={ExampleThemeRaw}>
-          <ExampleTheme/>
-        </CodeExample>
-
-        <div style={{paddingTop: '230px'}}/>
 
         <CodeExample title="Controlled" code={ExampleControlledRaw}>
           <ExampleControlled/>
