@@ -45,7 +45,7 @@ class IconWithOptions extends WixComponent {
           options={dropdownLayoutOptions}
           visible={this.state.showOptions}
           onSelect={(option, isSelectedOption) => this.onSelect(option, isSelectedOption)}
-        />
+          />
       </div>
     );
   }
@@ -57,20 +57,19 @@ class IconWithOptions extends WixComponent {
       [styles.wrapper]: true,
       [styles.hover]: this.state.showOptions
     });
-    console.log('%cblabla showOptions', 'font-size:14px;background:yellow; font-weight:bold', this.state.showOptions);
 
     return (
       <div
         className={classes}
         style={style}
         onMouseLeave={() => this.setState({showOptions: this.props.showOptions || false})}
-      >
+        >
         {dropDirectionUp ? this.renderDropdownLayout() : null}
         <div
           data-hook="icon-wrapper"
           className={styles.iconWrapper}
           onMouseEnter={() => this.setState({showOptions: true})}
-        >
+          >
           {this.iconElement}
         </div>
         {!dropDirectionUp ? this.renderDropdownLayout() : null}
