@@ -3,6 +3,10 @@ import BadgeSelect from 'wix-style-react/BadgeSelect';
 import {SKIN, TYPE, SIZE} from 'wix-ui-backoffice/dist/src/components/Badge/constants';
 import {storySettings} from './storySettings';
 
+import CodeExample from 'wix-storybook-utils/CodeExample';
+import ControlledComponentExample from './ControlledComponentExample';
+import ControlledComponentExampleRaw from '!raw-loader!./ControlledComponentExample';
+
 const options = Object.values(SKIN).map((skin, id) => ({
   id: id.toString(),
   skin,
@@ -46,5 +50,10 @@ export default {
     ],
     type: Object.keys(TYPE),
     size: Object.keys(SIZE)
-  }
+  },
+  examples: (
+    <CodeExample title="Controlled component can interrupt changes" code={ControlledComponentExampleRaw}>
+      <ControlledComponentExample/>
+    </CodeExample>
+  )
 };

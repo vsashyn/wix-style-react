@@ -34,6 +34,10 @@ class DropdownLayout extends WixComponent {
     this.onClickOutside = this.onClickOutside.bind(this);
   }
 
+  _isControlled() {
+    return typeof this.props.selectedId !== 'undefined';
+  }
+
   componentDidMount() {
     super.componentDidMount();
     if (this.props.focusOnSelectedOption) {
@@ -81,18 +85,12 @@ class DropdownLayout extends WixComponent {
 
     if (chosenOption) {
       const sameOptionWasPicked = chosenOption.id === this.state.selectedId;
-      this.setState({
-        selectedId: chosenOption.id,
-        hovered: NOT_HOVERED_INDEX
-      });
       if (onSelect) {
         onSelect(chosenOption, sameOptionWasPicked);
       }
-    } else {
-      this.setState({
-        selectedId: undefined,
-        hovered: NOT_HOVERED_INDEX
-      });
+    }
+    if (!this._isControlled()) {
+      this.setState({selectedId: chosenOption && chosenOption.id});
     }
     return !!onSelect && chosenOption;
   }
@@ -376,7 +374,6 @@ DropdownLayout.propTypes = {
 DropdownLayout.defaultProps = {
   options: [],
   tabIndex: 0,
-  selectedId: NOT_HOVERED_INDEX,
   maxHeightPixels: 260,
   closeOnSelect: true,
   itemHeight: 'small',
