@@ -9,6 +9,8 @@ import styles from './Checkbox.scss';
 import WixComponent from '../BaseComponents/WixComponent';
 import {withFocusable, focusableStates} from '../common/Focusable';
 
+import {generateID} from '../utils/generateId'
+
 /** a simple WixStyle checkbox */
 class Checkbox extends WixComponent {
   static displayName = 'Checkbox';
@@ -42,7 +44,7 @@ class Checkbox extends WixComponent {
     }
   };
 
-  _id = `${Checkbox.displayName}-${uniqueId()}`;
+  _id = `${Checkbox.displayName}-${generateID()}`;
 
   render() {
     const {
