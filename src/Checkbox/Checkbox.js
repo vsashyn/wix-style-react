@@ -1,6 +1,5 @@
 import React from 'react';
 import {node, bool, func, oneOf, string} from 'prop-types';
-import uniqueId from 'lodash/uniqueId';
 import classNames from 'classnames';
 import CheckboxChecked from 'wix-ui-icons-common/system/CheckboxChecked';
 import CheckboxIndeterminate from 'wix-ui-icons-common/system/CheckboxIndeterminate';
