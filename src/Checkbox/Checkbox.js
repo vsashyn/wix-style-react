@@ -9,7 +9,7 @@ import styles from './Checkbox.scss';
 import WixComponent from '../BaseComponents/WixComponent';
 import {withFocusable, focusableStates} from '../common/Focusable';
 
-import {generateID} from '../utils/generateId'
+import {generateID} from '../utils/generateId';
 
 /** a simple WixStyle checkbox */
 class Checkbox extends WixComponent {
@@ -44,6 +44,7 @@ class Checkbox extends WixComponent {
     }
   };
 
+  //TODO fix me please. We need to get away from ids.
   _id = `${Checkbox.displayName}-${generateID()}`;
 
   render() {
@@ -61,9 +62,11 @@ class Checkbox extends WixComponent {
 
     const classname = classNames(
       styles.root,
-      indeterminate ? styles.indeterminate :
-        checked ? styles.checked :
-          styles.unchecked,
+      indeterminate ?
+        styles.indeterminate :
+        checked ?
+        styles.checked :
+        styles.unchecked,
       {
         [styles.hover]: hover,
         [styles.disabled]: disabled,
@@ -92,27 +95,21 @@ class Checkbox extends WixComponent {
           style={{display: 'none'}}
           />
 
-        <Label
-          for={id}
-          dataHook="checkbox-label"
-          >
+        <Label for={id} dataHook="checkbox-label">
           <div
             data-hook="checkbox-box"
             className={classNames(styles.checkbox, styles[size])}
             >
-            <div
-              className={styles.inner}
-              onClick={e => e.stopPropagation()}
-              >
+            <div className={styles.inner} onClick={e => e.stopPropagation()}>
               {indeterminate ? <CheckboxIndeterminate/> : <CheckboxChecked/>}
             </div>
           </div>
 
-          { children &&
+          {children && (
             <div className={styles.children} data-hook="checkbox-children">
               {children}
             </div>
-          }
+          )}
         </Label>
       </div>
     );
