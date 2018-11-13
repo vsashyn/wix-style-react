@@ -62,7 +62,7 @@ const FAILING_COMPONENTS = [
   'TextArea',
   'TextField',
   'Tooltip',
-  'VBox' // Component has no testkit
+  'VBox', // Component has no testkit
   'Collapse'
 ];
 
