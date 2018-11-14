@@ -1,5 +1,5 @@
-import Skeleton from '../../src/Skeleton';
-import {Category} from '../storiesHierarchy';
+import Skeleton from '../src/Skeleton';
+import {Category} from './storiesHierarchy';
 
 const exampleContent = [
   {
@@ -38,7 +38,7 @@ export default {
   category: Category.COMPONENTS,
   storyName: 'Skeleton',
   component: Skeleton,
-  componentPath: '../../src/Skeleton',
+  componentPath: '../src/Skeleton',
 
   componentProps: {
     content: exampleContent[0].value,
