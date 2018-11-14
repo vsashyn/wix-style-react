@@ -1,44 +1,39 @@
 import styles from './Skeleton.scss';
 
+const selector = element => hook =>
+  element.querySelectorAll(`[data-hook="${hook}"]`);
+
 export default ({element}) => {
+  const byHook = selector(element);
+
   return {
     exists: () => !!element,
 
     /** return number of lines rendered */
-    getNumLines: () =>
-      element.querySelectorAll('[data-hook="placeholder-line"]').length,
+    getNumLines: () => byHook('placeholder-line').length,
 
     /** return boolean representing whether first line has special styling */
     hasFirstLine: spacing =>
-      element
-        .querySelector('[data-hook="placeholder-line"]')
-        .classList.contains(styles.first),
+      byHook('placeholder-line')[0].classList.contains(styles.first),
 
     /** return boolean representing whether given spacing is rendered */
     hasSpacing: spacing =>
-      element
-        .querySelector('[data-hook="placeholder-line"]')
-        .classList.contains(styles[spacing]),
+      byHook('placeholder-line')[0].classList.contains(styles[spacing]),
 
     /** return boolean representing whether given list of sizes is rendered */
     hasSizes: sizes =>
-      Array.from(element.querySelectorAll('[data-hook="placeholder-chunk"]'))
+      Array.from(byHook('placeholder-chunk'))
         .reduce(
-          ([expectedSizes, result], chunk) => {
-            const assertSize = expectedSizes.shift();
-            return [
-              expectedSizes,
-              chunk.classList.contains(styles[assertSize])
-            ];
-          },
+          ([[expectedSize, ...restSizes], result], chunk) => [
+            restSizes,
+            chunk.classList.contains(styles[expectedSize])
+          ],
           [sizes, []]
         )
         .every(Boolean),
 
     /** return boolean representing whether given alignment is rendered */
     hasAlignment: alignment =>
-      element
-        .querySelector('[data-hook="placeholder-line"]')
-        .classList.contains(styles[alignment])
+      byHook('placeholder-line')[0].classList.contains(styles[alignment])
   };
 };
