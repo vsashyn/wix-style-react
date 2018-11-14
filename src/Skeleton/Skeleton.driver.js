@@ -13,7 +13,7 @@ export default ({element}) => {
     getNumLines: () => byHook('placeholder-line').length,
 
     /** return boolean representing whether first line has special styling */
-    hasFirstLine: spacing =>
+    hasFirstLine: () =>
       byHook('placeholder-line')[0].classList.contains(styles.first),
 
     /** return boolean representing whether given spacing is rendered */
@@ -21,16 +21,17 @@ export default ({element}) => {
       byHook('placeholder-line')[0].classList.contains(styles[spacing]),
 
     /** return boolean representing whether given list of sizes is rendered */
-    hasSizes: sizes =>
-      Array.from(byHook('placeholder-chunk'))
-        .reduce(
-          ([[expectedSize, ...restSizes], result], chunk) => [
-            restSizes,
-            chunk.classList.contains(styles[expectedSize])
-          ],
-          [sizes, []]
-        )
-        .every(Boolean),
+    hasSizes: sizes => {
+      const [assertions] = Array.from(byHook('placeholder-chunk')).reduce(
+        ([result, [expectedSize, ...restSizes]], chunkElement) => [
+          result.concat(chunkElement.classList.contains(styles[expectedSize])),
+          restSizes
+        ],
+        [[], sizes]
+      );
+
+      return assertions.every(Boolean);
+    },
 
     /** return boolean representing whether given alignment is rendered */
     hasAlignment: alignment =>

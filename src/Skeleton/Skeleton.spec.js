@@ -16,14 +16,14 @@ let driver;
 describe('Skeleton', () => {
   describe('with default props', () => {
     beforeEach(() => {
-      driver = createDriver(<Skeleton {...{content}} />);
+      driver = createDriver(<Skeleton {...{content}}/>);
     });
 
     it(`should have ${content.length} placeholder lines`, () => {
       expect(driver.getNumLines()).toBe(content.length);
     });
 
-    it("should give the 'first' class to the first element", () => {
+    it('should give the \'first\' class to the first element', () => {
       expect(driver.hasFirstLine()).toBe(true);
     });
 
@@ -38,7 +38,7 @@ describe('Skeleton', () => {
 
   describe('`alignment` prop', () => {
     it('should align to middle', () => {
-      driver = createDriver(<Skeleton {...{content, alignment: 'middle'}} />);
+      driver = createDriver(<Skeleton {...{content, alignment: 'middle'}}/>);
       expect(driver.hasAlignment('middle')).toBe(true);
     });
   });

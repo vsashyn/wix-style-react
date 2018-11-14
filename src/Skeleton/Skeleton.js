@@ -5,7 +5,6 @@ import classnames from 'classnames';
 import WixComponent from '../BaseComponents/WixComponent';
 import styles from './Skeleton.scss';
 
-
 /**
  * Skeleton is a “placeholder” component.
  * Used for filling up screen usually for when some async operation is ongoing.
@@ -41,11 +40,11 @@ export default class Skeleton extends WixComponent {
               [styles.first]: key === 0,
               [styles.middle]: alignment === 'middle'
             })}
-          >
+            >
             <div
               data-hook="placeholder-chunk"
               className={classnames(styles.chunk, styles[item.size || 'small'])}
-            />
+              />
           </div>
         ))}
       </div>
