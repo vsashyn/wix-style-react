@@ -40,10 +40,10 @@ export default {
   component: Skeleton,
   componentPath: '../../src/Skeleton',
 
-  componentProps: () => ({
+  componentProps: {
     content: exampleContent[0].value,
     dataHook: 'storybook-skeleton'
-  }),
+  },
 
   exampleProps: {
     content: exampleContent

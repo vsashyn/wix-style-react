@@ -1,33 +1,27 @@
-$smallPercentage: 30%;
-$mediumPercentage: 45%;
-$largePercentage: 75%;
-$skeletonCornerWidth: 6px;
-
-@function mid-corner-position($percentage) {
-  @return calc(#{concealer-width($percentage, true)} + #{corner-position($percentage)});
-}
-
-@function corner-position($percentage) {
-  @return calc(#{$percentage} - #{$skeletonCornerWidth});
-}
-
-@function concealer-width($percentage, $middle: false) {
-  $divider: if($middle, 2, 1);
-  @return calc((100% - #{$percentage})/#{$divider});
-}
-
-@keyframes placeHolderShimmer {
-  0% {
-    background-position: -468px 0;
-  }
-  100% {
-    background-position: 468px 0;
-  }
-}
-
-.inner {
+.placeholderLine {
   position: relative;
+  display: flex;
+  align-items: center;
   height: 11px;
+  overflow: hidden;
+  background: #fff;
+
+  &:after {
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent 50%);
+    height: 11px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    animation: moveRight 1s linear infinite;
+    transform: translateX(-100%);
+    content: ' ';
+  }
+
+  &.middle {
+    justify-content: center;
+  }
   &.small {
     margin-bottom: 10px;
   }
@@ -37,6 +31,7 @@ $skeletonCornerWidth: 6px;
   &.large {
     margin-bottom: 22px;
   }
+
   &.first {
     &.small {
       margin-bottom: 23px;
@@ -50,144 +45,28 @@ $skeletonCornerWidth: 6px;
   }
 }
 
-.animatedBackground {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: linear-gradient(to right, #dfe5eb 9%, #eef2ef 18%, #dfe5eb 33%);
-  background-size: 1000px 11px;
-  height: 11px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.concealers {
-  position: absolute;
-  width: 100%;
-}
-
-.concealerRow {
-  display: flex;
-  width: 100%;
-  position: relative;
-}
-
 .chunk {
-  height: 11px;
+  height: 100%;
+  background: #dfe5eb;
+  border-radius: 30px;
+
   &.small {
-    width: $smallPercentage;
+    width: 30%;
   }
   &.medium {
-    width: $mediumPercentage;
+    width: 45%;
   }
   &.large {
-    width: $largePercentage;
+    width: 75%;
   }
-}
-
-.concealer {
-  background: white;
-  height: 11px;
-  &.small {
-    width: concealer-width($smallPercentage);
-  }
-  &.medium {
-    width: concealer-width($mediumPercentage);
-  }
-  &.large {
-    width: concealer-width($largePercentage);
-  }
-}
-
-.skeletonCorner {
-  width: 6px;
-  height: 11px;
-  background: url(../assets/skeleton-corner.svg) no-repeat;
-  position: absolute;
-  top: 0;
-  left: 0;
-  &.rightSkeletonCorner {
-    transform: scaleX(-1);
-    &.small {
-      left: corner-position($smallPercentage);
-    }
-    &.medium {
-      left: corner-position($mediumPercentage);
-    }
-    &.large {
-      left: corner-position($largePercentage);
-    }
-  }
-}
-
-.middle {
-  .concealer {
-    &.small {
-      width: concealer-width($smallPercentage, true);
-    }
-    &.medium {
-      width: concealer-width($mediumPercentage, true);
-    }
-    &.large {
-      width: concealer-width($largePercentage, true)
-    }
-  }
-  .skeletonCorner {
-    &.small {
-      left: concealer-width($smallPercentage, true);
-    }
-    &.medium {
-      left: concealer-width($mediumPercentage, true);
-    }
-    &.large {
-      left: concealer-width($largePercentage, true)
-    }
-    &.rightSkeletonCorner {
-      &.small {
-        left: mid-corner-position($smallPercentage);
-      }
-      &.medium {
-        left: mid-corner-position($mediumPercentage);
-      }
-      &.large {
-        left: mid-corner-position($largePercentage);
-      }
-    }
-  }
-}
-
-@mixin rightToLeft {
-
 }
 
 :global(.rtl) {
-  .animatedBackground {
-    animation-name: placeHolderShimmer;
+  .placeholderLine:after {
     animation-direction: reverse;
   }
+}
 
-  .inner:not(.middle) {
-    .skeletonCorner {
-      right: 0;
-      left: unset;
-      transform: scaleX(-1);
-      &.rightSkeletonCorner {
-        transform: none;
-        &.small {
-          right: corner-position($smallPercentage);
-        }
-        &.medium {
-          right: corner-position($mediumPercentage);
-        }
-        &.large {
-          right: corner-position($largePercentage);
-        }
-      }
-    }
-  }
+@keyframes moveRight {
+  to { transform: translateX(100%); }
 }

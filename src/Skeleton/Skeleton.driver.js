@@ -1,19 +1,44 @@
-export const skeletonDriverFactory = ({element}) => {
+import styles from './Skeleton.scss';
 
+export default ({element}) => {
   return {
     exists: () => !!element,
-    lines: () => element.querySelectorAll('[data-hook="placeholder-line"]'),
-    chunks: () => element.querySelectorAll('[data-hook="placeholder-chunk"]'),
-    concealers: () => element.querySelectorAll('[data-hook="placeholder-concealer"]'),
-    isFirstLine: el => el.className.includes('first'),
-    smallSize: el => el.className.includes('small'),
-    mediumSize: el => el.className.includes('medium'),
-    largeSize: el => el.className.includes('large'),
-    inSmallSpacing: el => el.className.includes('small'),
-    inMediumSpacing: el => el.className.includes('medium'),
-    inLargeSpacing: el => el.className.includes('large'),
-    inMiddleAlignment: el => el.className.includes('middle')
+
+    /** return number of lines rendered */
+    getNumLines: () =>
+      element.querySelectorAll('[data-hook="placeholder-line"]').length,
+
+    /** return boolean representing whether first line has special styling */
+    hasFirstLine: spacing =>
+      element
+        .querySelector('[data-hook="placeholder-line"]')
+        .classList.contains(styles.first),
+
+    /** return boolean representing whether given spacing is rendered */
+    hasSpacing: spacing =>
+      element
+        .querySelector('[data-hook="placeholder-line"]')
+        .classList.contains(styles[spacing]),
+
+    /** return boolean representing whether given list of sizes is rendered */
+    hasSizes: sizes =>
+      Array.from(element.querySelectorAll('[data-hook="placeholder-chunk"]'))
+        .reduce(
+          ([expectedSizes, result], chunk) => {
+            const assertSize = expectedSizes.shift();
+            return [
+              expectedSizes,
+              chunk.classList.contains(styles[assertSize])
+            ];
+          },
+          [sizes, []]
+        )
+        .every(Boolean),
+
+    /** return boolean representing whether given alignment is rendered */
+    hasAlignment: alignment =>
+      element
+        .querySelector('[data-hook="placeholder-line"]')
+        .classList.contains(styles[alignment])
   };
 };
-
-export default skeletonDriverFactory;
