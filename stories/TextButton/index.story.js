@@ -1,7 +1,7 @@
 import React from 'react';
 import TextButton from 'wix-style-react/TextButton';
 import {storySettings} from './storySettings';
-import icons from './icons-for-story';
+import icons from '../utils/icons-for-story';
 
 import TextButtonStory from './examples';
 
