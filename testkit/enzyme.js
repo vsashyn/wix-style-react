@@ -87,6 +87,9 @@ export const multiSelectCompositeTestkitFactory = enzymeTestkitFactoryCreator(mu
 import loaderDriverFactory from '../src/Loader/Loader.driver';
 export const loaderTestkitFactory = enzymeTestkitFactoryCreator(loaderDriverFactory);
 
+import skeletonDriverFactory from '../src/Skeleton/Skeleton.driver';
+export const skeletonTestkitFactory = enzymeTestkitFactoryCreator(skeletonDriverFactory);
+
 import radioGroupDriverFactory from '../src/RadioGroup/RadioGroup.driver';
 export const radioGroupTestkitFactory = enzymeTestkitFactoryCreator(radioGroupDriverFactory);
 

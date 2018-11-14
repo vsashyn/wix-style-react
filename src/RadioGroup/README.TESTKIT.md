@@ -34,7 +34,7 @@
   ***************/
 
   const dataHook = 'myDataHook';
-  const wrapper = mount(<div/><RadioGroup dataHook={dataHook}/></div>);
+  const wrapper = mount(<div><RadioGroup dataHook={dataHook}/></div>);
   const testkit = enzymeRadioGroupTestkitFactory({wrapper, dataHook});
 
   //Do tests
@@ -47,7 +47,7 @@
   const div = document.createElement('div');
   const dataHook = 'myDataHook';
   const wrapper = div.appendChild(
-    ReactTestUtils.renderIntoDocument(<div/><RadioGroup dataHook={dataHook}/></div>, {dataHook})
+    ReactTestUtils.renderIntoDocument(<div><RadioGroup dataHook={dataHook}/></div>, {dataHook})
   );
   const testkit = radioGroupTestkitFactory({wrapper, dataHook});
 

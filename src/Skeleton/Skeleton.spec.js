@@ -2,6 +2,10 @@ import React from 'react';
 import Skeleton from './Skeleton';
 import {createDriverFactory} from 'wix-ui-test-utils/driver-factory';
 import {skeletonDriverFactory} from './Skeleton.driver';
+import {skeletonTestkitFactory} from '../../testkit';
+import {isTestkitExists, isEnzymeTestkitExists} from '../../test/utils/testkit-sanity';
+import {skeletonTestkitFactory as enzymeSkeleteonTestkitFactory} from '../../testkit/enzyme';
+import {mount} from 'enzyme';
 
 const content = [
   {type: 'line', size: 'small'},
@@ -21,6 +25,10 @@ describe('Skeleton', () => {
   describe('with default props', () => {
     beforeEach(() => {
       driver = createComponent({content});
+    });
+
+    it('should exist', () => {
+      expect(driver.exists()).toBe(true);
     });
 
     it('should have 3 placeholder lines', () => {
@@ -60,6 +68,16 @@ describe('Skeleton', () => {
     it('should have double the amount of concealers, but same number of lines', () => {
       expect(driver.chunks().length).toBe(content.length);
       expect(driver.concealers().length).toBe(2 * content.length);
+    });
+  });
+
+  describe('testkits', () => {
+    it('should exist', () => {
+      expect(isTestkitExists(<Skeleton content={content}/>, skeletonTestkitFactory)).toBe(true);
+    });
+
+    it('should exist', () => {
+      expect(isEnzymeTestkitExists(<Skeleton content={content}/>, enzymeSkeleteonTestkitFactory, mount)).toBe(true);
     });
   });
 });

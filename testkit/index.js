@@ -90,6 +90,9 @@ export const multiSelectCompositeTestkitFactory = testkitFactoryCreator(multiSel
 import loaderDriverFactory from '../src/Loader/Loader.driver';
 export const loaderTestkitFactory = testkitFactoryCreator(loaderDriverFactory);
 
+import skeletonDriverFactory from '../src/Skeleton/Skeleton.driver';
+export const skeletonTestkitFactory = testkitFactoryCreator(skeletonDriverFactory);
+
 import radioGroupDriverFactory from '../src/RadioGroup/RadioGroup.driver';
 export const radioGroupTestkitFactory = testkitFactoryCreator(radioGroupDriverFactory);
 

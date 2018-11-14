@@ -41,10 +41,9 @@ export default {
   componentPath: '../../src/Skeleton',
 
   componentProps: () => ({
-    content: exampleContent[0].value
+    content: exampleContent[0].value,
+    dataHook: 'storybook-skeleton'
   }),
-
-  hiddenProps: ['dataHook'],
 
   exampleProps: {
     content: exampleContent
